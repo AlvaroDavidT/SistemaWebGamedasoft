@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <title>{% block title %}Gamedasoft {% endblock %}| Control Tiempos</title>
+        <meta name="description" content="{% block metadesc %}Medadescripion comun{% endblock %}"/>
+        {% block stylesheets %}
+            <link href="{{asset('bundles/loginfirst/css/bootstrap.min.css')}}" rel="stylesheet"/>  
+            <link href="{{asset('bundles/loginfirst/css/index.css')}}" rel="stylesheet"/>
+            <link href="{{asset('bundles/loginfirst/css/bootstrap-social.css')}}" rel="stylesheet"/>
+            <link href="{{asset('bundles/loginfirst/css/bootstrap.css')}}" rel="stylesheet"/>
+            <link href="{{asset('bundles/loginfirst/css/docs.css')}}" rel="stylesheet"/>
+            <link href="{{asset('bundles/loginfirst/css/font-awesome.css')}}" rel="stylesheet"/>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    {%block body %}
+        {%block content1 %}
+            {% block header %}
+                Encabezado
+            {% endblock %}
+            {%block content2 %}
+                {% block asideLeft %}
+                    Lado Izquierda
+                    {%block section1 %}
+                        Barra navegacion 
+                    {%endblock%}
+                {% endblock %}
+                {% block asideRight %}
+                    Lado Derecho 
+                    {%block section2 %}
+                        content header
+                    {%endblock%}
+                    {%block section3 %}
+                        content 
+                    {%endblock%}
+                {% endblock %}
+            {%endblock%}
+            {% block Footer %}
+                pie de pagina 
+            {% endblock%}
+        {% endblock %}
+        {% block javascripts %} 
+        {% endblock %}
+    {% endblock %}
+</html>

@@ -1,0 +1,197 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Lista Empleados</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% endfor%}
+               <!-- Trigger the modal with a button -->
+              
+               <!-- Modal -->
+               <div id="myModal" class="modal fade" role="dialog">
+                   <div class="modal-dialog">
+
+                       <!-- Modal content-->
+                       <div class="modal-content">
+                           <div class="modal-header btn-primary ">
+                               <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
+                               <h5 class="modal-title">Nuevo Empleado</h5>
+                           </div>
+                           
+                
+                           
+                       <form id="empleado" method="Post" class="form-horizontal" action='{{ path('GuardarEmpleado') }}'>
+                           <div class="modal-body">                              
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for='nombre'>Nombres:</label>
+                        <div class="input-group col-sm-5">
+                            <div class="input-group-addon">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                            <input type="text"  id="nombre" name="nombre" class="form-control  input-sm "/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for='apellidos'>Apellidos:</label>
+                        <div class="input-group col-sm-5">
+                            <div class="input-group-addon">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                            <input type="text" id="apellidos" name="apellidos" class="form-control  input-sm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="cedula">Cédula Identidad:</label>
+                        <div class="input-group col-sm-5">
+                            <div class="input-group-addon">
+                                <i class="fa fa-qrcode"></i>
+                            </div>
+                            <input type="text" id="cedula" name="cedula" class="form-control  input-sm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="genero">Seleccione Género:</label>
+                        <div class="input-group col-sm-4">
+                            <select class="form-control input-sm" name='genero' id='genero' >
+                             <option value=''selected>Seleccione Genero</option>
+                                <option value='1'>Femenino</option>
+                                <option value='0'>Masculino</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="telefono">Telefóno:</label>
+                        <div class="input-group col-sm-3">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" id="telefono" name="telefono" class="form-control  input-sm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="direccion">Dirección:</label>
+                        <div class="input-group col-sm-6">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <input type="text" id="direccion" name="direccion"  class="form-control  input-sm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="mail">Correo Electrónico:</label>
+                        <div class="input-group col-sm-4">
+                            <div class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <input type="email" id="mail" name="mail" class="form-control  input-sm"/>
+                        </div>
+                    </div>
+                   <div class="form-group">
+                        <label class="col-sm-3 control-label">Departamento:</label>
+                        <div class="input-group col-sm-4">
+                            <select class="form-control input-sm" name='departamento' id='departamento'>
+                               
+                                <option value=''selected>Seleccione Departamento</option>
+                                {% for Departamento in Departamentos %}                                                
+                                    <option value='{{Departamento.id }}' name='{{Departamento.Nombre }}'>{{Departamento.Nombre }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div> 
+                              <div class="form-group">
+                    <label class="col-sm-3 control-label" for="claveT">Clave Temporal:</label>
+                       <div class="input-group col-sm-4">
+                           <div class="input-group-addon">
+                               <i class="fa fa-key"></i>
+                           </div>
+                           <input type="Text" id="claveT" name="claveT" class="form-control  input-sm"/>
+                       </div>
+                   </div>
+                               
+                                  
+                           </div>
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                               <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                           </div>
+                           </form>
+                       </div>
+
+                   </div>
+               </div>  
+               <div class="panel panel-primary">
+                   <div class="panel-heading">
+                    <div class='row'>
+                        <div class='col-xs-6 '>Lista de Empleados</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                    </div>
+                       <hr>
+                   </div>
+                   <div class="panel-body">
+                       <div class="table-responsive">
+                    <table id="example2" class="table table-hover table-condensed">
+                        <thead class='bg-success'>
+                            <tr> 
+                                <th>#</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDO</th>
+                                <th>CEDULA DE IDENTIDAD</th>
+                                <th>EMAIL</th>
+                                <th>TELEFONO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for EmpleadosLt in Empleados %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ EmpleadosLt.Nombre }}</td>
+                                    <td>{{ EmpleadosLt.Apellido }}</td>
+                                    <td>{{ EmpleadosLt.CIdentidad }}</td>
+                                    <td>{{ EmpleadosLt.Email }}</td>
+                                    <td>{{ EmpleadosLt.Telefono }}</td>
+                                    <td>
+                                        <a href="{{path('VerEmpleado',{'idE': EmpleadosLt.id })}}" class='btn btn-xs btn-success'>Ver</a>
+                                        <a href="{{path('EditarEmpleado',{'idE': EmpleadosLt.id })}}"  class='btn btn-xs btn-primary'>Editar</a>
+                                        <a href="{{path('EliminarEmpleado',{'idED': EmpleadosLt.id })}}"  class='btn btn-xs btn-danger'>Eliminar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                                   </div>
+                               </div>
+                           </div>
+                       </div><!-- /.box -->
+                   </div>
+               </section><!-- /.content -->
+            
+               {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+{# src/Login/firstBundle/Resources/views/Layout_RegistroTiempos.html.twig #}
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{asset('bundles/loginfirst/css/bootstrap.min.css')}}" rel="stylesheet"/>  
+    <link href="{{asset('bundles/loginfirst/css/bootstrap-social.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/bootstrap.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/docs.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/font-awesome.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/morris/morris.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/fullcalendar/fullcalendar.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/AdminLTE.css')}}" rel="stylesheet"/>
+    <link href="{{asset('bundles/loginfirst/css/index.css')}}" rel="stylesheet"/>
+           
+{% endblock %}
+{% block body %}
+    <body class="skin-black">
+        {% block content1 %}
+            {% block header %}
+
+            {% endblock%}
+            {% block content2 %}
+
+            {% endblock %}
+            {% block Footer %}        
+                <nav class="navbar navbar-inverse navbar-fixed-bottom">
+                    <div class="container-fluid"  id="Desarrollo">
+                        Desarrollado por Alvaro Tuso G. | Gamedasoft © Todos los Derechos Reservados, 2016.
+                    </div>
+                </nav>
+            {% endblock%}
+            {% block javascripts %} 
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <script src="{{asset('bundles/loginfirst/js/jquery-ui-1.10.3.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/bootstrap.min.js') }}"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/morris/morris.min.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/fullcalendar/fullcalendar.min.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/jqueryKnob/jquery.knob.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/plugins/iCheck/icheck.min.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/AdminLTE/app.js') }}"></script>
+                <script src="{{asset('bundles/loginfirst/js/AdminLTE/dashboard.js') }}"></script>
+            {% endblock %}
+        {% endblock %}
+    </body>
+{% endblock %}

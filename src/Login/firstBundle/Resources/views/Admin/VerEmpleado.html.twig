@@ -1,0 +1,37 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('ConsultaEmpleados')}}"><i class="fa fa-dashboard"></i> Lista Empleados</a></li>
+            <li class="active">Datos Empleado</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row content">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Información General</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                             {% for EmpleadoV in Empleado %}
+                        <p> <strong>Nombres:  </strong>{{EmpleadoV.nombre}}</p>
+                          <p><strong>Apellidos:  </strong>{{EmpleadoV.apellido}}</p>
+                         <p><strong>N° Cédula :  </strong>{{EmpleadoV.cidentidad}}</p>
+                          <p><strong>Dirección:  </strong>{{EmpleadoV.direccion}}</p>
+                           <p><strong>Teléfono:  </strong>{{EmpleadoV.telefono}}</p>
+                           {% if EmpleadoV.genero == ''%}
+                               <p><strong>Género:  </strong>Masculino</p>
+                               {% else %}
+                                    <p><strong>Género:  </strong>Femenino</p>
+                           {% endif %}
+                           <p><strong>Departamento:  </strong>{{EmpleadoV.Departamento}}</p>
+                             {%endfor%}
+                     </div>
+                     
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

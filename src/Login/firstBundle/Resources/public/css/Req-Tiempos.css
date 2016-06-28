@@ -1,0 +1,101 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 27, 2016, 3:56:18 PM
+    Author     : ALVARO
+*/
+
+#Desarrollo{
+
+    font-family:  'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    font-size: 11px !important;
+    border-style: solid;
+    border-color: #800;
+    border-top: 10px solid #333;
+    border-right: 0px solid #800;
+    border-left: 0px solid #800;
+   
+    padding-top: 10px;
+    padding-bottom: 0px;
+    background: #800;
+    color:#ffffff;
+  
+    text-align: center;
+
+}
+#img_logoP{
+    
+    width: 150px;
+    height: 45px;
+  padding: 1px;
+
+}
+.imagenIndex{
+     height: 700px;
+    width: 700px;
+}
+.error{
+    color: #800;
+    position: relative;
+    font-style: italic;
+    font-size: 11px;
+   border-style: dotted;
+    border-width: 1px 1px 1px 1px;
+}
+.valid{
+    color:#008d4c;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+input#fechaInicial{
+  padding: 5px 0;
+  font-size: 13px;
+  font-family: inherit;
+  width: 80px;
+  height: 20px;
+  margin-left: 20px;
+}
+input#fechaFinal{
+  padding: 5px 0;
+  font-size: 13px;
+  font-family: inherit;
+  width: 80px;
+  height: 20px;
+  margin-left: 27px;
+}
+input#fechaFinal{
+  padding: 5px 0;
+  font-size: 13px;
+  font-family: inherit;
+  width: 80px;
+  height: 20px;
+  margin-left: 27px;
+}
+input#time{
+    width: 100px;
+  height: 40px;
+   font-size: 20px;
+  font-family: Arial;
+}

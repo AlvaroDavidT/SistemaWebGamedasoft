@@ -1,0 +1,147 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Requerimientos</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+      <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% endfor%} 
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><strong><i class="fa fa-bars" aria-hidden="true"></i>  Requerimientos pendientes por asignar </strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-hover table-condensed">
+                                <thead class='bg-success'>
+                                    <tr> 
+                                        <th>#</th>
+                                        <th>Fecha</th>
+                                        <th>Id Requerimiento</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                        <th>Módulo</th>
+                                        <th>Asignación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for RequeP in Requerimientos %}
+                                        
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ RequeP.RqFecha|date("Y/m/d", false)}}</td>
+                                            <td>Rq-{{ RequeP.RqId }}</td>
+                                            <td>{{ RequeP.Cliente }}</td>
+                                            <td>{{ RequeP.Estado }}</td>
+                                            <td>{{ RequeP.Modulo }}</td>
+                                            <td>
+                                                <button type="button" id="{{ RequeP.Modulo }}" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{RequeP.RqId}}" data-whatever="@mdo">Asignación</button>
+                                                <div class="modal" id="{{RequeP.RqId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <form id="Asignacion" method="POST" action='{{ path('GuardarAsignacion',{'idRq': RequeP.RqId}) }}'>                          
+                                                                                
+                                                        <div class="modal-content">
+                                                            <div class="modal-header btn-primary">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                                                <h5 class="modal-title" id="exampleModalLabel"><strong> Asignación Requerimiento</strong></h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class='row'>
+                                                                    <div class='col-sm-12'>
+                                                                        <strong>Id Requerimiento:</strong>
+                                                                        <div class='row'>
+                                                                            <div class='col-xs-12 col-sm-12'>
+                                                                                <span
+                                                                                    <span>Rq-{{ RequeP.RqId }}</span> 
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                   <div class='col-sm-12'>
+                                                                        <strong>Modulo:</strong>
+                                                                        <div class='row'>
+                                                                          <div class='col-xs-12 col-sm-12'>
+                                                                                <span> {{ RequeP.Modulo}} </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class='col-sm-12'>
+                                                                        <strong>Menu:</strong>
+                                                                        <div class='row'>
+                                                                            <div class='col-xs-12 col-sm-12'>
+                                                                                <span> {{ RequeP.Menu}} </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                   <div class='col-sm-12'>
+                                                                        <strong>Submenu:</strong>
+                                                                        <div class='row'>
+                                                                            <div class='col-xs-12 col-sm-12'>
+                                                                                <span> {{ RequeP.Submenu}} </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                     <div class='col-sm-12'>
+                                                                        <strong>Descripcion:</strong>
+                                                                        <div class='row'>
+                                                                            <div class='col-xs-12 col-sm-12'>
+                                                                                <span> {{ RequeP.RqDescripcion }} </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>        
+                                                                    <div class='col-sm-12'>
+                                                                        <strong>Empleado:</strong>
+                                                                        <div class='row'>
+                                                                            <div class='col-xs-12 col-sm-12'>
+                                                                                    <div class="form-group">
+                                                                                        <select class="form-control input-sm" name='Empleado' id='Empleado'>
+                                                                                            <option value=''selected>Seleccione Empleado</option>
+                                                                                            {% for Empleado in Empleados %}                                                
+                                                                                                <option value='{{Empleado.Id}}' name='{{Empleado.Id }}'>{{Empleado.Nombre }} {{Empleado.Apellido }}</option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="errors">
+                                                                                        
+                                                                                    </div>
+                                                                               
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>                                                                            
+                                                                </div>                                                    
+
+                                                            </div>
+                                                            <div class="modal-footer bg-gray">
+                                                                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                                                <button type="submit" id="asignar" class="btn btn-success btn-xs"><span class="fa fa-check-circle"></span> Asignar</button>
+                                                            </div>
+                                                        </div>
+                                                             </form>                            
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div><!-- /.box -->
+        </div>
+    </section><!-- /.content -->
+{% endblock %}

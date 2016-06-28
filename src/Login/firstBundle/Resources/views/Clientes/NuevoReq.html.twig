@@ -1,0 +1,152 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Cliente.html.twig' %}
+
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Requerimentos</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% endfor%}
+                <!-- Trigger the modal with a button -->
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header btn-primary ">
+                                <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
+                                <h4 class="modal-title" align="center">INGRESO NUEVO REQUERIMIENTO</h4>
+                            </div>
+                            <form id="NuevoReqC" method="Post" class="form-horizontal" action='{{ path('GuardarReqCliente') }}'>
+                                <div class="modal-body">                               
+                                  
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="Modulo">Modulo:</label>
+                                        <div class="input-group col-sm-6">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                             <div id="PathMod" data-path="{{path('Menus1')}}"></div>  
+                                             <div id="PathMenu" data-path="{{path('SubMenus1')}}"></div>  
+                                            <select class="form-control input-sm" name='Modulo' id='Modulo'>
+                                                 <option value=''selected>Seleccione Modulo</option>
+                                                {% for Modulos in Modulos %}                                                
+                                                    <option value='{{Modulos.id }}' name='{{Modulos.Nombre }}'>{{Modulos.Nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div><!-- Code snippet -->
+                                    <div class="form-group">
+                                        <div class="col-xs-12 text-center"><div class="loading"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="Menu">Menu:</label>
+                                        <div class="input-group col-sm-6">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <select class="form-control input-sm" name='Menu' id='Menu'>
+                                                <option value=''selected>Seleccione Menu</option>
+                                            </select>
+                                         </div>  
+                                    </div> 
+                                     <div class="form-group">
+                                        <div class="col-xs-12 text-center"><div class="loading"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="SubMenu">SubMenu:</label>
+                                        <div class="input-group col-sm-6">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <select class="form-control input-sm" name='SubMenu' id='SubMenu'>
+                                                <option value=''selected>Seleccione SubMenu</option>
+                                            </select>
+                                         </div>  
+                                    </div> 
+                                      <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="Detalle">Detalle:</label>
+                                        <div class="input-group col-sm-6">
+                                            ​<textarea id="txtArea" name="txtArea" rows="5" cols="50"></textarea>
+                                        </div>  
+                                    </div> 
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>  
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '>Lista de Requerimientos</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div class="navigation">
+                                <small><strong> TOTAL DE REGISTROS: {{pagination|length}}</strong></small>
+                            </div>
+                            <table id="example2" class="table table-hover table-condensed">
+                                <thead class='bg-success'>
+                                    <tr> 
+                                        <th>#</th>
+                                        <th>Fecha</th>
+                                        <th>Id-Requerimiento</th>
+                                        <th>Estado</th>
+                                        <th>Modulo</th>  
+                                        <th>Menu</th>
+                                        <th>SubMenu</th>  
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                    {% for Req in pagination%}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ Req.Fecha |date("Y/m/d", false)}}</td>
+                                            <td>Req-{{ Req.IdReq }}</td>
+                                            <td>{{ Req.Estado }}</td>
+                                            <td>{{ Req.Modulo}}</td>
+                                            <td>{{ Req.Menu }}</td>
+                                            <td>{{Req.SubMenu}}</td>                    
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                             
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box -->
+                    </div>
+                </section><!-- /.content -->
+                {% endblock %}
+
+
+
+
+
+
+
+
+
+

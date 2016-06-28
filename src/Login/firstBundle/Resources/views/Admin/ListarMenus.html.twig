@@ -1,0 +1,105 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Lista Menus</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% endfor%}
+                <!-- Trigger the modal with a button -->
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header btn-primary ">
+                                <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
+                                <h5 class="modal-title">Nuevo Menu</h5>
+                            </div>
+                            <form id="NuevoMenu" method="Post" class="form-horizontal" action='{{ path('GuardarMenu') }}'>
+
+                                <div class="modal-body">                               
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="MenuNombre">Nombre:</label>
+                                        <div class="input-group col-sm-5">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-pencil"></i>
+                                            </div>
+                                            <input type="Text" id="MenuNombre" name="MenuNombre" class="form-control  input-sm"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="Modulo">Modulo:</label>
+                                        <div class="input-group col-sm-6">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                            <select class="form-control input-sm" name='Modulo' id='Modulo'>
+                                                 <option value=''selected>Seleccione Modulo</option>
+                                                {% for Modulos in Modulos %}                                                
+                                                    <option value='{{Modulos.idModulo }}' name='{{Modulos.NombreModulo }}'>{{Modulos.NombreModulo }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>  
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '>Lista de Menus</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-hover table-condensed">
+                                <thead class='bg-success'>
+                                    <tr> 
+                                        <th>#</th>
+                                        <th>Menus</th>
+                                        <th>Módulo</th>
+                                        <th class='text-center'>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for Menus in Menus %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ Menus.NombreMenu }}</td>
+                                            <td>{{ Menus.Modulo }}</td>
+                                            <td class='text-center'> {% if Menus.EstadoMenu == 1%}
+                                                <a href="{{path('DesactivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-success'>Activado</a>
+                                            {% else %}
+                                                <a href="{{path('ActivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-danger'>Desactivado</a>
+                                                {% endif %}</td>                    
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box -->
+                    </div>
+                </section><!-- /.content -->
+                {% endblock %}

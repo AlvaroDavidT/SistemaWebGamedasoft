@@ -1,0 +1,38 @@
+{# src/login/firstBundle/Resources/views/Login/Login.html.twig #}
+{% extends 'LoginfirstBundle::layout_Login.html.twig' %}
+{% block content2 %}   
+    <div class="form-box" id="login-box">
+        <div class="header">Inicio de Sesión</div>
+        <form  id="LoginUsuario" method="Post" action="{{ path('Login') }}">
+            <div class="body bg-gray">
+               <div class="form-group">
+                    <select id="Perfil" name="_perfil" class="form-control input-sm" >
+                       {% for Nombres in Perfiles %}
+                            <option>{{ Nombres.nombre|upper }}  </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                        
+                            <div class="form-group">
+                    <input type="text" id="username" name="_username" class="form-control" placeholder="Cedula/RUC"/>
+                </div>
+            
+
+                <div class="form-group">
+                    <input type="password" id="password" name="_password" class="form-control" placeholder="Password"/>
+                </div>          
+            </div>
+            <div class="footer">
+                
+                <button type="submit" class="btn-block"> <i class="fa fa-sign-in"></i> INGRESAR AL SISTEMA</button>
+            </div>
+        </form>
+                            {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                               <h1> <span class="alert-warning">
+                                   {{ flashMessage }}
+                               </span></h1>
+                        {% endfor%}
+</div>
+{% endblock %}
+

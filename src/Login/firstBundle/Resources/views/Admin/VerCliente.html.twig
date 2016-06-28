@@ -1,0 +1,33 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('ConsultaClientes')}}"><i class="fa fa-dashboard"></i> Lista Clientes</a></li>
+            <li class="active">Datos Cliente</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row content">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Información General</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                             {% for Cliente in Cliente %}
+                        <p> <strong>Nombres:  </strong>{{Cliente.nombre}}</p>
+                          <p><strong>Usuario:  </strong>{{Cliente.usuario}}</p>
+                         <p><strong>RUC :  </strong>{{Cliente.ruc}}</p>
+                          <p><strong>Dirección:  </strong>{{Cliente.direccion}}</p>
+                           <p><strong>Teléfono:  </strong>{{Cliente.telefono}}</p>
+                           <p><strong>Contacto:  </strong>{{Cliente.contacto}}</p>
+                            <p><strong>Email:  </strong>{{Cliente.email}}</p>
+                             {%endfor%}
+                     </div>
+                     
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,329 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 31, 2016, 3:02:10 PM
+    Author     : ALVARO
+*/
+body{
+    background-color: #ffffff;
+}
+
+#toolbar{
+    min-height: 30px;
+    border-top: 0px dotted #800;
+    border-right: 1px dotted #D3D3D3;
+    border-bottom: 1px dotted #D3D3D3;
+    border-left: 1px dotted #D3D3D3;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 0px 0px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 11px; 
+    font-weight: bold;
+    color:#ffffff;
+    background-color:#333;
+}
+
+
+
+#wra-nav{
+    
+     
+}
+.header{
+    background:url(../Imagenes/fondo.png) no-repeat fixed;
+
+}
+
+
+
+.wrapper{
+
+  
+    border-style: dotted;
+    border-width: 0px 0px 2px 0px;
+    border-color: #800;
+    margin: 10px 0px 0px 0px;
+    text-align: center;
+     
+}
+#social{
+  
+    border-width: 1px 1px 1px 1px;
+    margin: 10px 0px 0px 0px;
+    border-color: #800;
+    text-align: center;
+    padding: 10px 10px 10px 0px;
+    vertical-align: central;
+       font-family:verdana, arial;
+    font-size: 11px !important;
+     font-weight: bold;
+     color: #990000;
+  
+     border-top: 1px dotted #800;
+    border-right: 1px dotted #800;
+    border-bottom: 1px dotted #800;
+    border-left: 1px dotted #800;
+}
+#buscar{
+    border-style: solid;
+    border-width: 0px 0px 0px 0px;
+    border-color: #800;
+    margin-right: 0px;
+    margin-left: 0px;
+    text-align: right;
+    vertical-align: central;
+    font-size: 11px !important;
+    font-weight: bold;
+    color: #000;
+   
+    /*
+FECHA DE BANNER
+*/
+}
+.mifecha {
+  
+ padding: 10px 20px 10px 10px;
+   text-align: right;
+   font-family:verdana, arial;
+   font-size: 12px;
+   color:#000;
+   font-weight: bold;
+    letter-spacing: initial;
+}
+
+
+
+#img_logo {
+    border: 0;
+    vertical-align: middle;
+    height: 130px;
+    width: 250px;
+    padding: 0px 0px 10px 20px;
+    float: left;
+}
+
+.navbar-default {
+    background-color: #990000;
+    margin: 10px 0px 0px 0px;
+    font-family:  'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    font-size: 10px !important; 
+     
+        
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ecdbff;
+ 
+}
+
+.navbar-default .navbar-nav > li > a {
+ color: #ffffff;
+ border-style: dotted;
+ border-color: #ffffff;
+  border-width: 0px 1px 0px 0px;
+}
+/*
+Este es el fondo del menu a:hover
+*/
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color:#800;
+  background: #ffffff;
+  font-weight: bold;
+ 
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+
+  background: #dd6155;
+    font-weight: bold;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {  
+    
+    background: #ffffff;
+   
+}
+    
+.dropdown-menu {
+    background-color: #800;
+    
+}
+
+.fa-twitter{
+   
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    color: #ffffff;
+     color:#800;
+       font-weight: bold;
+}
+
+
+.dropdown-menu>li>a { color: #ffffff;
+  font-family:  'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    font-size: 10px !important;
+}
+
+#info{
+   
+    font-family:  'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    font-size: 11px !important;
+    border-style: solid;
+    border-color: #800;
+    border-right: 0px solid #800;
+    border-left: 0px solid #800;
+    border-bottom: 0px solid #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #333;
+    color:#ffffff;
+
+} 
+#Desarrollo{
+
+    font-family:  'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    font-size: 11px !important;
+    border-style: solid;
+    border-color: #800;
+    border-top: 1px solid #fff;
+    border-right: 0px solid #800;
+    border-left: 0px solid #800;
+    border-bottom: 0px solid #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #800;
+    color:#ffffff;
+    text-align: center;
+
+}
+#footerTitle{
+    border-top: 0px solid #fff;
+    border-right: 0px dotted #800;
+    border-left: 0px dotted #800;
+    border-bottom: 1px dotted #fff;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+#footercontent{
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-size: 11px;
+}
+ 
+
+/*
+index de la pagina estatica
+
+*/
+.enlaces{
+    border: dotted;
+    border-color: #800;
+    height: 130px;
+    padding: 20px;
+    text-align: center;
+    border-width: 1px;
+    font-family:verdana, arial;
+    font-size: 11px !important;
+    font-weight: bold;
+    color: #00405f;
+    margin: 15px;
+     
+}
+.enlaces:hover{
+    background: #800;
+    color: #ffffff;
+    font-family:verdana, arial;
+    font-size: 11px !important;
+}
+#img_logoQS {
+    
+    width: 300px;
+    height:300px;
+    border: 1px;
+    border-style: dotted;
+    border-color: #800;
+    margin: 10px 0px 10px 0px;
+  
+    
+}
+.Texto{
+       margin: 10px 0px 10px 0px;
+       font-family:verdana, arial;
+   font-size: 12px !important;
+}
+.TextoPro{
+       margin: 0px 0px 0px 0px;
+       font-family:verdana, arial;
+   font-size: 10px !important;
+}
+.Titulo{
+    background-color: 	#F3881C;
+    text-align : justify;
+    color: #ffffff;
+   margin: 10px 0px 10px 0px;
+    padding: 15px;
+    font-family:verdana, arial;
+    font-size: 14px !important;
+    font-weight: bold;
+    opacity: 0.8;
+ 
+}
+#produTitle{
+   font-family:verdana, arial;
+   font-size: 10px !important;
+   font-weight: bold;
+}
+#img_logoP{
+    
+    width: 100px;
+    height: 50px;
+    margin: 15px;
+
+}
+#headerRT{
+     background:url(../Imagenes/fondo.png) no-repeat fixed;  
+      border-top: 10px solid #000;
+      border-bottom: 5px solid #800;
+      background-size: 100% 100%;
+}
+.BarrHerra{
+  
+      border-right: 5px solid #000;
+       border-left: 5px solid #000;
+       height: 100%;
+     padding: 5px;
+     background: #005983;
+     color: #fff;
+}
+.btn-block{
+    background: #333;
+    color:#fff;
+    border: 0px solid #800;
+    -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+   -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  font-size: 15px;
+  
+}
+.btn-block:hover{
+    background: #800;
+    color:#fff;
+    font-size: 15px;
+    border: 0px solid #800;
+
+}
+

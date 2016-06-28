@@ -1,0 +1,92 @@
+
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Actualizar Datos</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '><h5>Actualizar  Información Administrador</h5></div>
+                            <div class='col-xs-6 text-right'></div>
+                        </div>
+                        <hr>
+                    </div>
+                    {% for Admin in Administradores %}
+                        <form id="ActualizarAdmin" class="form-horizontal">
+                            <div id="abc" data-path="{{path('ActualizaDatos')}}"></div>  
+                            <div id="idpr" value="{{Admin.id}}"></div>       
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for='nombre'>Nombres:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-pencil"></i>
+                                        </div>
+                                        <input type="text" value="{{ Admin.Nombre }}"  id="nombre" name="nombre" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for='apellidos'>Apellidos:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-pencil"></i>
+                                        </div>
+                                        <input type="text" value="{{ Admin.Apellido }}" id="apellidos" name="apellidos" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="telefono">Telefóno:</label>
+                                    <div class="input-group col-sm-2">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <input type="text" value="{{ Admin.Telefono }}" id="telefono" name="telefono" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="mail">Correo Electrónico:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                        <input type="email" value="{{ Admin.Email }}" id="mail" name="mail" class="form-control  input-sm"/>
+                                    </div>
+                                </div><hr>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="cedula">Cédula Identidad/Usuario:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-qrcode"></i>
+                                        </div>
+                                        <input  type="text" value="{{ Admin.Cidentidad }}" id="cedula" name="cedula" class="form-control  input-sm " disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class='row'>
+                                    <div class='col-xs-4 text-right'>
+                                        <button class="btn btn-success btn-sm" id="btn-Guardar">Guardar</button>
+                                    </div>
+                                    <div class='col-xs-4 text-left'>
+                                        <div id="success" class=" col-xm-5 alert alert-success"  style="display: none;"> <strong>Datos Actualizados Exitosamente !!</strong> </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

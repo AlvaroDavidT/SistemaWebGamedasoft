@@ -1,0 +1,70 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Cliente.html.twig' %}
+
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Consulta Requerimentos</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% endfor%}
+                <!-- Trigger the modal with a button -->
+
+             
+                       
+                          
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '>Lista de Requerimientos</div><div class='col-xs-6 text-right'><button id="DescargarPdf" type="button" class="btn btn-success btn-sm text-right" ><i class="fa fa-print"></i> Generar Pdf</button></div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div class="navigation">
+                                <small><strong> TOTAL DE REQUERIMIENTOS: {{pagination.getTotalItemCount}}</strong></small>
+                            </div>
+                            <div id="reporte">
+                            <table id="example2" class="table table-hover table-condensed">
+                                <thead class='bg-success'>
+                                    <tr> 
+                                        <th>#</th>
+                                        <th>Fecha</th>
+                                        <th>Id-Requerimiento</th>
+                                        <th>Descripcion</th>
+                                     
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                    {% for Req in pagination%}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ Req.Fecha |date("Y/m/d", false)}}</td>
+                                            <td>Req-{{ Req.id }}</td>
+                                            <td>{{Req.Descripcion}}</td>                    
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                            </div>
+                                             <div class="navigation">
+                                               {{knp_pagination_render(pagination)}}
+                                               
+                                           </div>
+                                    </div>
+                                </div>
+                                               
+                            </div>
+                        </div><!-- /.box -->
+                    </div>
+                </section><!-- /.content -->
+                {% endblock %}

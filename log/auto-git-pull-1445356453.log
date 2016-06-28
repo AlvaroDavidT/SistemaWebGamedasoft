@@ -1,0 +1,20 @@
+[2015-10-20 17:54:13]	INFO	Attempting deployment...
+[2015-10-20 17:54:13]	INFO	IP is 192.30.252.41
+[2015-10-20 17:54:13]	INFO	Array
+(
+    [HTTP_HOST] => 130.56.251.245
+    [HTTP_ACCEPT] => */*
+    [HTTP_USER_AGENT] => GitHub-Hookshot/e935cc4
+    [HTTP_X_GITHUB_EVENT] => ping
+    [HTTP_X_GITHUB_DELIVERY] => ce752a00-7742-11e5-86e5-e755a2359785
+)
+
+[2015-10-20 17:54:13]	POST	Array
+(
+)
+
+[2015-10-20 17:54:13]	INFO	sudo -u ubuntu '/opt/lampp/htdocs/tesis/vendor/tmd/auto-git-pull/scripts/git-pull.sh' -b master -d /opt/lampp/htdocs/tesis -r origin 2>&1
+[2015-10-20 17:54:13]	ERROR	exception 'Exception' with message 'Error 1 executing shell script' in /opt/lampp/htdocs/tesis/vendor/tmd/auto-git-pull/src/Deployer.php:319
+Stack trace:
+#0 /opt/lampp/htdocs/tesis/deploy.php(18): Tmd\AutoGitPull\Deployer->deploy()
+#1 {main}

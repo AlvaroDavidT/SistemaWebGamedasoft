@@ -1,0 +1,109 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('ConsultaEmpleados')}}"><i class="fa fa-dashboard"></i> Lista Empleados</a></li>
+            <li class="active">Editar Empleado</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row content">
+            <div class="col-xs-12">
+                {% for EmpleadoE in Empleado %} 
+                    <form id="empleado" method="Post" class="form-horizontal" action='{{ path('AsignacionRq',{'idEU': EmpleadoE.id}) }}'>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for='nombre'>Nombres:</label>
+                            <div class="input-group col-sm-3">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                                <input type="text"  id="nombre" name="nombre" value='{{EmpleadoE.nombre}}' class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for='apellidos'>Apellidos:</label>
+                            <div class="input-group col-sm-3">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                                <input type="text" id="apellidos" value='{{EmpleadoE.apellido}}' name="apellidos" class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="cedula">Cédula Identidad:</label>
+                            <div class="input-group col-sm-3">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-qrcode"></i>
+                                </div>
+                                <input type="text" id="cedula" name="cedula" value='{{EmpleadoE.cidentidad}}' class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="genero">Seleccione Género:</label>
+                            <div class="input-group col-sm-2">
+                                {% if EmpleadoE.genero == ''%}
+                                    <p><strong></strong>Masculino</p>
+                                {% else %}
+                                    <p><strong></strong>Femenino</p>
+                                {% endif %}
+                                <p>
+                                    <button type="button" class="btn btn-success btn-xs">cambiar</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="telefono">Telefóno:</label>
+                            <div class="input-group col-sm-2">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <input type="text" id="telefono" name="telefono" value='{{EmpleadoE.telefono}}' class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="direccion">Dirección:</label>
+                            <div class="input-group col-sm-4">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <input type="text" id="direccion" name="direccion" value='{{EmpleadoE.direccion}}' class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="mail">Correo Electrónico:</label>
+                            <div class="input-group col-sm-3">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <input type="email" id="mail" name="mail" value='{{EmpleadoE.email}}' class="form-control  input-sm"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Departamento:</label>
+                            <div class="input-group col-sm-3">
+                                <p>  {{EmpleadoE.Departamento }}</p>
+                                 <p>  {{EmpleadoE.id }}</p>
+                              
+                                <p>
+                                    <button type="button" id="Departamentos" class="btn btn-success btn-xs">cambiar</button>
+                                </p>
+                            </div>
+                        </div> 
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="input-group col-sm-3">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                {%endfor%}
+                <div class="form-group">
+                </div>  
+            </div><!-- /.box -->    
+        </div>
+    </section>
+{% endblock %}

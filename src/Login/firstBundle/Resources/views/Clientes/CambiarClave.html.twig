@@ -1,0 +1,97 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Cliente.html.twig' %}
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Actualizar Clave</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+     <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                
+                <form id="ActualizaClaveCliente"class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-12 '><h5>Actualizar Clave</h5></div>                          
+                        </div>
+                        <hr>
+                    </div>
+                    {% for cli in Clientes %}
+                     
+                            <div id="CambiaCClave" data-path="{{path('CambiarClaveCliente')}}"></div>  
+                            <div id="idCliente" value="{{cli.id}}"></div>       
+                            <div class="panel-body">
+                                <div class='row'>
+                                    <div class='col-xs-3 col-sm-3 text-right'>
+                                        <strong>Nombre Empresa:</strong>
+                                    </div>
+                                    <div class='col-xs-10 col-sm-6 text-left'>
+                                        <div class="text-uppercase">                                            
+                                             {{ cli.Nombre }}<br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='row'>                                   
+                                    <div class='col-xs-3 col-sm-3 text-right'>
+                                        <strong>Usuario:</strong>
+                                    </div>
+                                    <div class='col-xs-10 col-sm-6 text-left'>
+                                        <div class="text-uppercase">                                            
+                                         {{ cli.Ruc }} <br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                          <div class='row'>                                              
+                                              <div class='col-xs-3 col-sm-3 text-right'>
+                                                  <strong>Clave Anterior:</strong>
+                                              </div>
+                                              <div class='col-xs-10 col-sm-2 text-left'>                                
+                                                  <input type="password" id="ClaveA" name="ClaveA" class="form-control  input-sm"/>                                                                                             
+                                              </div>
+                                              <div id="error" class=" col-xs-10 col-sm-2 alert-danger" style="display: none;"> <strong>Error!! Clave Incorrecta </strong></div>
+                                            
+                                          </div>  <br>
+                                             <div class='row'>                                              
+                                              <div class='col-xs-3 col-sm-3 text-right'>
+                                                  <strong>Clave Nueva:</strong>
+                                              </div>
+                                              <div class='col-xs-10 col-sm-2 text-left'>                                
+                                                  <input type="password" id="ClaveN" name="ClaveN" class="form-control  input-sm"/>                                                                                             
+                                              </div>
+                                             
+                                             </div><br>
+                                          <div class='row'>                                              
+                                              <div class='col-xs-3 col-sm-3 text-right'>
+                                                  <strong>Confirmar Clave Nueva:</strong>
+                                              </div>
+                                              <div class='col-xs-10 col-sm-2 text-left'>                                
+                                                  <input type="password" id="ClaveCN" name="ClaveCN" class="form-control  input-sm"/>                                                                                             
+                                              </div>
+                                              
+                                          </div>
+                                        <br>
+                                                                 
+                            </div>
+                            <div class="panel-footer">
+                                <div class='row'>
+                                    <div class='col-xs-2 col-sm-4 text-right'>
+                                       <button class="btn btn-success btn-sm" id="btn-GuardarClave">Guardar</button>                                     
+                                    </div>
+                                    <div class='col-xs-10 col-sm-3 text-left'>
+                                        <div id="success" class=" col-xm-3 alert-success"  style="display: none;"> <strong>Exitosamente !! Datos Actualizados</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

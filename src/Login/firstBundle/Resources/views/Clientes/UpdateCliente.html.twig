@@ -1,0 +1,111 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Cliente.html.twig' %}
+
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Actualizar Datos Cliente</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '><h5>Actualizar  Información Cliente</h5></div>
+                            <div class='col-xs-6 text-right'></div>
+                        </div>
+                        <hr>
+                    </div>
+                    {% for cli in Clientes %}
+                        <form id="ActualizarCliente" class="form-horizontal">
+                            <div id="ActualizaCliente" data-path="{{path('UpdateCliente')}}"></div>  
+                            <div id="IdCliente" value="{{cli.id}}"></div>       
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for='NombreEmpresa'>Nombre Empresa:</label>
+                                    <div class="input-group col-sm-5">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-pencil"></i>
+                                        </div>
+                                        <input type="text" value="{{ cli.Nombre }}"  id="NombreEmpresa" name="NombreEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for='DireccionEmpresa'>Dirección</label>
+                                    <div class="input-group col-sm-4">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-pencil"></i>
+                                        </div>
+                                        <input type="text" value="{{ cli.Direccion }}" id="DireccionEmpresa" name="DireccionEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for=TelefonoEmpresa">Telefono Empresa:</label>
+                                    <div class="input-group col-sm-2">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <input type="text" value="{{cli.Telefono }}" id="TelefonoEmpresa" name="TelefonoEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                     <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="UsuarioEmpresa">Nombre Usuario:</label>
+                                    <div class="input-group col-sm-2">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-unlock"></i>
+                                        </div>
+                                        <input type="text" value="{{cli.usuario }}" id="UsuarioEmpresa" name="UsuarioEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                     <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="ContactoEmpresa">Contacto:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user-md"></i>
+                                        </div>
+                                        <input type="text" value="{{cli.Contacto }}" id="ContactoEmpresa" name="ContactoEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="MailEmpresa">Correo Electrónico:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                        <input type="email" value="{{ cli.Email }}" id="MailEmpresa" name="MailEmpresa" class="form-control  input-sm"/>
+                                    </div>
+                                </div><hr>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="RucEmpresa">Ruc:</label>
+                                    <div class="input-group col-sm-3">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-qrcode"></i>
+                                        </div>
+                                        <input  type="text" value="{{ cli.ruc }}" id="RucEmpresa" name="RucEmpresa" class="form-control  input-sm " disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class='row'>
+                                    <div class='col-xs-4 text-right'>
+                                        <button class="btn btn-success btn-sm" id="Guardar-Cliente">Guardar</button>
+                                    </div>
+                                    <div class='col-xs-4 text-left'>
+                                        <div id="success" class=" col-xm-5 alert alert-success"  style="display: none;"> <strong>Exitosamente !!</strong> Datos Actualizados</div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

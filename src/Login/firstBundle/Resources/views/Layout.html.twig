@@ -1,0 +1,175 @@
+{# src/Login/firstBundle/Resources/views/layout.html.twig #}
+{% extends '::base.html.twig' %}
+{%block body %}
+    <body>
+        {%block content1 %}
+            {% block header %}
+                <div class="header">
+                    <div class="container">
+                        <div id="wra-nav">
+                            <div class="row" id="toolbar">
+                                <div class="col-xs-12 col-md-8"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><strong> QUITO-ECUADOR AV. COLON Y AMAZONAS EDIFICIO ESPAÑA</strong></div>
+                                <div class="col-xs-12 col-md-4"> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"> (02)-2345904</span> &nbsp; <span class="glyphicon glyphicon-earphone" aria-hidden="true"> (02)-2345904</span></div>
+                            </div>
+                            <div class="wrapper">
+                                <header>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-8">
+                                            <img id="img_logo" src="{{asset('bundles/loginfirst/Imagenes/logo-gameda.png')}}" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-4"> 
+                                            <div class="row" id="social">
+                                                Siguenos en |
+                                                <a class="btn btn-social-icon btn-twitter">
+                                                    <span class="fa fa-twitter"></span>
+                                                </a>                          
+                                                <a class="btn btn-social-icon btn-facebook">
+                                                    <span class="fa fa-facebook"></span>
+                                                </a>
+                                                <a class="btn btn-social-icon btn-google">
+                                                    <span class="fa fa-google"></span>
+                                                </a>
+                                                <a class="btn btn-social-icon btn-">
+                                                    <span class="fa fa-youtube"></span>
+                                                </a>
+                                                <a class="btn btn-social-icon">
+                                                    <span class="fa fa-skype"></span>
+                                                </a>|
+                                            </div>
+                                            <div class="row">
+                                                <script>
+                                                    var f = new Date();
+                                                    var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                                                    var dias = new Array("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");
+                                                    document.write('<div class="mifecha">' + "Quito, ");
+                                                    document.write(dias[f.getDay()] + " ");
+                                                    document.write(f.getDate() + " ");
+                                                    document.write(meses[f.getMonth()] + " ");
+                                                    document.write(f.getFullYear());
+                                                    document.write('</div>');
+                                                </script>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header> 
+                            </div>
+                            <nav class="navbar navbar-default" id="navegacion">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li><a  href="{{path('homepage')}}">INICIO</a></li>
+                                        <li><a href="{{path('estatica_Nosotros')}}">NOSOTROS</a></li>
+                                        <li class="dropdown">
+                                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SERVICIOS EN LINEA<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">FACTURACION ELECTRONICA</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#">SOLICITUD REQUERIMIENTOS</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#">REGISTRO TIEMPOS</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{{path('estatica_Contactos')}}">CONTACTOS</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+            {%block content2 %}
+            {% endblock %}
+            {% block Footer %}
+                <div class="container-fluid">
+                    <div class="row" id="info">
+                        <div class="container">
+                            <div class="col-xs-12  col-md-4">
+                                <div class="row"  id="footerTitle" >
+                                    <div class="col-xs-12">
+                                        SÍGUENOS
+                                    </div>
+                                </div>
+                                <div class="row" id="footercontent">
+                                    <div class="col-xs-12">
+                                        <a class="btn btn-social-icon btn-twitter">
+                                            <span class="fa fa-twitter"></span>
+                                        </a>                          
+                                        <a class="btn btn-social-icon btn-facebook">
+                                            <span class="fa fa-facebook"></span>
+                                        </a>
+                                        <a class="btn btn-social-icon btn-google">
+                                            <span class="fa fa-google"></span>
+                                        </a>
+                                        <a class="btn btn-social-icon btn-pinterest">
+                                            <span class="fa fa-youtube"></span>
+                                        </a>
+                                        <a class="btn btn-social-icon btn-vimeo">
+                                            <span class="fa fa-skype"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-xs-12  col-md-4">
+                                <div class="row"  id="footerTitle">
+                                    <div class="col-xs-12">
+                                        CONTÁCTANOS
+                                    </div>
+                                </div>
+                                <div class="row" id="footercontent">
+                                    <div class="col-xs-12">
+                                        <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"> (02)-2345904</span>
+                                    </div>
+                                </div>
+                                <div class="row" id="footercontent" >
+                                    <div class="col-xs-12">
+
+                                        <span class="glyphicon glyphicon-earphone" aria-hidden="true"> (02)-2345904</span>
+                                    </div>
+                                </div>
+                                <div class="row" id="footercontent" >
+                                    <div class="col-xs-12">
+                                        <span class="glyphicons glyphicon-envelope"> </span> &nbsp; info@gamedasoft.com
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12  col-md-4">
+                                <div class="row" id="footerTitle" >
+                                    <div class="col-xs-12">
+                                        UBICACIÓN
+                                    </div>
+                                </div>
+                                <div class="row" id="footercontent">
+                                    <div class="col-xs-12">
+                                        <span class="glyphicon glyphicon-home"> </span>&nbsp; Av. Amazonas N25-23 y Av. Colon Ed. España piso 7 of. 77<br>
+                                        QUITO-ECUADOR
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="Desarrollo">
+                        <div class="container">
+                            <div class="col-xs-12">
+                                Desarrollado por Alvaro Tuso G. | Gamedasoft © Todos los Derechos Reservados, 2016.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock%}
+        {% endblock%}
+        {% block javascripts %} 
+            <script src="{{asset('bundles/loginfirst/js/bootstrap.min.js') }}"></script>
+            <script src="{{asset('bundles/loginfirst/js/jquery.js') }}"></script>
+        {% endblock %}
+    </body>
+{% endblock %}

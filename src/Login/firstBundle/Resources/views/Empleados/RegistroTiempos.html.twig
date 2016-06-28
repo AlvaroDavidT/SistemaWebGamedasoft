@@ -1,0 +1,123 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Empleado.html.twig' %}
+
+{%block section2 %}
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li class="active">Registro tiempos</li>
+        </ol>
+    </section>
+{%endblock%}
+{%block section3 %}
+    <section class="content">
+
+        <div class="col-xs-12">
+            {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+            {% endfor%}
+            <form id="Re">                                                                               
+                <div class="panel panel-primary">
+                    <div id="PathGuardarHojasT" data-path="{{path('GuardarHojasT')}}"></div>  
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '><i class="fa fa-bars" aria-hidden="true"></i> Registrar Tiempos</div>
+                            <div class='col-xs-6 text-right'>
+                            <button id="GuardarT" class="btn btn-success"><i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i> Guardar</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div id="PathRegistroT" data-path="{{path('RegistroT')}}"></div>  
+                    
+                    <div class="panel-body text-center">
+                        <label class="col-sm-3 control-label" for="Modulo">Seleccione la Empresa:</label>
+                        <div class="input-group col-sm-5">
+                            <div class="input-group-addon">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                            </div>
+
+                            <select class="form-control input-sm" name='RegistroReq' id='RegistroReq'>
+                                <option value=''selected>Seleccione Empresa</option>
+                                {% for Clientes in clientesReq %}                                              
+                                    <option value='{{Clientes.codigo }}' name='{{Clientes.Nombre }}'>{{Clientes.Nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <br>
+                        <div class="col-xs-12 text-center"><div class="loading"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="Req">Seleccionar el requerimiento:</label>
+                            <div class="input-group col-sm-5">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                                <select class="form-control input-sm" name='Requerimiento' id='Requerimiento'>
+                                    <option value=''selected>Seleccione Requerimiento</option>
+                                </select>
+                            </div>  
+                        </div> 
+                        <br>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="Req">Ingrese el Tiempo:</label>
+                            <div class="input-group">
+
+                                <input type="text" name="time" id="time" placeholder="Tiempo">
+                            </div>  
+                        </div> 
+                     
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="Req">Ingrese la actividad:</label>
+                            <div class="input-group col-sm-5">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                                <input class="form-control" name="actividad" id="actividad">
+                               
+                            </div>  
+                        </div> 
+                         <div class='col-xs-4 text-left'>
+                        <div id="success" class=" col-xm-5 alert alert-success"  style="display: none;"> <strong>Datos Guardados Exitosamente !!</strong> </div>
+                    </div>
+                    </div>
+
+                    <br>
+                    
+                    <br>
+                </div>
+            </form>
+        </div><!-- /.box -->
+    </div>
+</section><!-- /.content -->
+{% endblock %}
+
+
+  {#          <label class="col-sm-2 control-label" >  <div class="col-xs-12 text-center"><div class="loading"></div>
+                        </div></label>                
+                    <div class="input-group col-sm-5">
+                        
+                        <div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="bg-success text-center">
+                               
+                                    <th>Requerimiento</th>
+                                    <th>Detalle</th>
+                                    <th>Ingresar Tiempo</th>
+                              
+                            </thead>
+                            <tbody id="req" class="control-group">
+                                
+                            </tbody>
+  </table>
+                            
+</div>
+            #}          
+
+
+
+
+
+
+

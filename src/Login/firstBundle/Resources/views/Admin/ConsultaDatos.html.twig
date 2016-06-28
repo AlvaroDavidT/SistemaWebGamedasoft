@@ -1,0 +1,59 @@
+{# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
+{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{%block section2 %}
+   
+{%endblock%}
+{%block section3 %}
+  
+         <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">ADMINISTRADORES DEL SISTEMA</h3>                                    
+                                </div><!-- /.box-header -->
+                                <div class="box-body table-responsive">
+                                    <table id="example2" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>NOMBRE</th>
+                                                <th>APELLIDO</th>
+                                                <th>CEDULA DE IDENTIDAD</th>
+                                                <th>EMAIL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                              {% for Admin in Administradores %}
+                                                  <tr>
+                                                      <td>  <a href="">{{ Admin.Id }}</a></td>
+                                                      <td>  <a href="">{{ Admin.Nombre }}</a></td>
+                                                      <td>{{ Admin.Apellido }}</td>
+                                                        <td>{{ Admin.CIdentidad }}</td>
+                                                      <td>{{ Admin.Email }}</td>
+                                                  </tr>
+                                              {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                           
+
+                           
+                        </div>
+                    </div>
+
+                </section><!-- /.content -->
+              
+           
+  
+{% endblock %}
