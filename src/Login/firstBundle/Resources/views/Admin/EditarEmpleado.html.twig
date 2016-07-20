@@ -1,5 +1,5 @@
 {# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
-{% extends 'LoginfirstBundle::layout_Admin.html.twig' %}
+{% extends 'LoginfirstBundle::Layout_Admin.html.twig' %}
 {%block section2 %}
     <section>
         <ol class="breadcrumb">
@@ -13,7 +13,7 @@
         <div class="row content">
             <div class="col-xs-12">
                 {% for EmpleadoE in Empleado %} 
-                    <form id="empleado" method="Post" class="form-horizontal" action='{{ path('AsignacionRq',{'idEU': EmpleadoE.id}) }}'>
+                    <form id="empleado" method="Post" class="form-horizontal" action='{{ path('GuardarEditEmpleado',{'idEU': EmpleadoE.id}) }}'>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for='nombre'>Nombres:</label>
                             <div class="input-group col-sm-3">

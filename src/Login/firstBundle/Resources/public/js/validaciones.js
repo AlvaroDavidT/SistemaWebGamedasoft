@@ -431,8 +431,7 @@ $(document).ready(function () {
                         $("#error").fadeOut(1000);
                     }, 1000);
                      $( "#ClaveA" ).focus();
-                      alert(dato);
-                    $('#ClaveA').val('');
+                     $('#ClaveA').val('');
                     }                   
                 }
             });

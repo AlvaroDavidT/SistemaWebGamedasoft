@@ -1,0 +1,25 @@
+[2016-07-19 00:40:34]	INFO	Attempting deployment...
+[2016-07-19 00:40:34]	INFO	IP is 190.96.105.140
+[2016-07-19 00:40:34]	INFO	Array
+(
+    [HTTP_HOST] => 130.56.251.245
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_PRAGMA] => no-cache
+    [HTTP_CACHE_CONTROL] => no-cache
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    [HTTP_REFERER] => http://130.56.251.245/SistemaWebGamedasoft/
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, sdch
+    [HTTP_ACCEPT_LANGUAGE] => es-ES,es;q=0.8,en;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ll5fb2638cs5n93r02ufqbkqe3
+)
+
+[2016-07-19 00:40:34]	POST	Array
+(
+)
+
+[2016-07-19 00:40:34]	ERROR	exception 'Exception' with message '190.96.105.140 is not an authorised Remote IP Address' in /opt/lampp/htdocs/SistemaWebGamedasoft/vendor/tmd/auto-git-pull/src/Deployer.php:292
+Stack trace:
+#0 /opt/lampp/htdocs/SistemaWebGamedasoft/deploy.php(18): Tmd\AutoGitPull\Deployer->deploy()
+#1 {main}

@@ -66,7 +66,7 @@ class Empleados
     /**
      * @var string
      *
-     * @ORM\Column(name="Foto", type="blob", length=65535, nullable=false)
+     * @ORM\Column(name="Foto", type="blob", length=65535, nullable=true)
      */
     private $foto;
 
