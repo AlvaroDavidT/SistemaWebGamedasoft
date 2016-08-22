@@ -12,120 +12,90 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                {% for flashMessage in app.session.flashbag.get('mensaje')%}
-                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+               {% for flashMessage in app.session.flashbag.get('MensajeUpdate')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
                 {% endfor%}
-               <!-- Trigger the modal with a button -->
-              
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('MensajeError')%}
+                    <div class="alert alert-danger"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                 {% for flashMessage in app.session.flashbag.get('MensajeExitoso')%}
+                     <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                {% endfor%}
+               <!-- Trigger the modal with a button -->             
                <!-- Modal -->
                <div id="myModal" class="modal fade" role="dialog">
-                   <div class="modal-dialog">
+                   <div class="modal-dialog modal-sm">
 
                        <!-- Modal content-->
                        <div class="modal-content">
                            <div class="modal-header btn-primary ">
                                <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
-                               <h5 class="modal-title">Nuevo Empleado</h5>
-                           </div>
-                           
-                
-                           
+                               <h5 class="modal-title" align="center"><strong>INGRESO NUEVO EMPLEADO</strong></h5>
+                           </div>                                                               
                        <form id="empleado" method="Post" class="form-horizontal" action='{{ path('GuardarEmpleado') }}'>
-                           <div class="modal-body">                              
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for='nombre'>Nombres:</label>
-                        <div class="input-group col-sm-5">
-                            <div class="input-group-addon">
-                                <i class="fa fa-pencil"></i>
-                            </div>
-                            <input type="text"  id="nombre" name="nombre" class="form-control  input-sm "/>
-                        </div>
-                    </div>
+                           <div class="modal-body">    
+                               <div class='row'>
+                                   <div class='col-sm-12'>
+                                       <strong>Nombres: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                               <input type="text"  id="nombre" name="nombre" class="form-control  input-sm "/>                                                                                </div>
+                                       </div>
+                                   </div>
+                                    <div class='col-sm-12'>
+                                       <strong>Apellidos: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                               <input type="text" id="apellidos" name="apellidos" class="form-control  input-sm"/>                                                                               </div>
+                                       </div>
+                                   </div>
+                                    <div class='col-sm-12'>
+                                       <strong>Nº Cédula: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                               <input type="text" id="cedula" name="cedula" class="form-control  input-sm"/>                                                                             </div>
+                                       </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for='apellidos'>Apellidos:</label>
-                        <div class="input-group col-sm-5">
-                            <div class="input-group-addon">
-                                <i class="fa fa-pencil"></i>
-                            </div>
-                            <input type="text" id="apellidos" name="apellidos" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="cedula">Cédula Identidad:</label>
-                        <div class="input-group col-sm-5">
-                            <div class="input-group-addon">
-                                <i class="fa fa-qrcode"></i>
-                            </div>
-                            <input type="text" id="cedula" name="cedula" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="genero">Seleccione Género:</label>
-                        <div class="input-group col-sm-4">
-                            <select class="form-control input-sm" name='genero' id='genero' >
-                             <option value=''selected>Seleccione Genero</option>
-                                <option value='1'>Femenino</option>
-                                <option value='0'>Masculino</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="telefono">Telefóno:</label>
-                        <div class="input-group col-sm-3">
-                            <div class="input-group-addon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <input type="text" id="telefono" name="telefono" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="direccion">Dirección:</label>
-                        <div class="input-group col-sm-6">
-                            <div class="input-group-addon">
-                                <i class="fa fa-map-marker"></i>
-                            </div>
-                            <input type="text" id="direccion" name="direccion"  class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="mail">Correo Electrónico:</label>
-                        <div class="input-group col-sm-4">
-                            <div class="input-group-addon">
-                                <i class="fa fa-envelope"></i>
-                            </div>
-                            <input type="email" id="mail" name="mail" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                   <div class="form-group">
-                        <label class="col-sm-3 control-label">Departamento:</label>
-                        <div class="input-group col-sm-4">
-                            <select class="form-control input-sm" name='departamento' id='departamento'>
-                               
-                                <option value=''selected>Seleccione Departamento</option>
-                                {% for Departamento in Departamentos %}                                                
-                                    <option value='{{Departamento.id }}' name='{{Departamento.Nombre }}'>{{Departamento.Nombre }}</option>
-                                {% endfor %}
-
-                            </select>
-                        </div>
-                    </div> 
-                              <div class="form-group">
-                    <label class="col-sm-3 control-label" for="claveT">Clave Temporal:</label>
-                       <div class="input-group col-sm-4">
-                           <div class="input-group-addon">
-                               <i class="fa fa-key"></i>
-                           </div>
-                           <input type="Text" id="claveT" name="claveT" class="form-control  input-sm"/>
-                       </div>
-                   </div>
-                               
-                                  
-                           </div>
+                                   </div>
+                                     <div class='col-sm-12'>
+                                       <strong>Telefóno: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                                 <input type="text" id="telefono" name="telefono" class="form-control  input-sm"/>                                                                      </div>
+                                       </div>
+                                   </div>
+                                     <div class='col-sm-12'>
+                                       <strong>Dirección: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                                <input type="text" id="direccion" name="direccion"  class="form-control  input-sm"/>                                                                             </div>
+                                       </div>
+                                   </div>
+                                        <div class='col-sm-12'>
+                                       <strong>Correo Electrónico:: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                                <input type="email" id="mail" name="mail" class="form-control  input-sm"/>                                                                             </div>
+                                       </div>
+                                   </div>
+                                   <div class='col-sm-12'>
+                                       <strong>Clave Temporal: </strong>
+                                       <div class='row'>
+                                           <div class='col-xs-12 col-sm-12'>
+                                               <input type="Text" id="claveT" name="claveT" class="form-control  input-sm"/>                                                                             </div>
+                                       </div>
+                                   </div>
+                               </div>
+                              </div>
                            <div class="modal-footer">
-                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                               <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                               <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                               <button type="submit" class="btn btn-success btn-xs" id="btn-envia"><span class="fa fa-check-circle"></span> Guardar</button>
                            </div>
                            </form>
                        </div>
@@ -135,38 +105,139 @@
                <div class="panel panel-primary">
                    <div class="panel-heading">
                     <div class='row'>
-                        <div class='col-xs-6 '>Lista de Empleados</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                        <div class='col-xs-6 '><strong>Lista de Empleados</strong></div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
                     </div>
                        <hr>
                    </div>
                    <div class="panel-body">
-                       <div class="table-responsive">
-                    <table id="example2" class="table table-hover table-condensed">
+                    <div class="table-responsive">
+                             <div class="col-md-12">
+                                <p class="text-info">
+                                    <br>
+                                    <small><strong> TOTAL DE REGISTROS: <span class="badge">{{Empleados|length}}</span></strong></small>
+                                    <br></p>                         
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel panel-danger col-md-12">
+                                    <div id="PathReqEliminarE" data-path="{{path('EliminarEmpleado1')}}"></div>
+                                    <div id="PathBuscaCedula" data-path="{{path('BuscaPorCedula')}}"></div> 
+                                    <div id="ActualizaE" data-path="{{path('GuardarEditEmpleado1')}}"></div>
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <strong>Buscar por Nº de cedula: <i class="fa fa-search" aria-hidden="true"></i></strong>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group col-sm-3">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-qrcode"></i>
+                                                </div>
+                                                <input type="text" value="" id="Ced" name="ced" class="form-control  input-sm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 text-center"><div class="loading1"></div>
+                                </div>
+                            </div>
+                    <table id="Empleados" class="table table-bordered">
                         <thead class='bg-success'>
                             <tr> 
-                                <th>#</th>
-                                <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>CEDULA DE IDENTIDAD</th>
-                                <th>EMAIL</th>
-                                <th>TELEFONO</th>
-                                <th>ACCIONES</th>
+                                <th class="text-center small">Nº</th>
+                                <th class="text-center small">Nº CEDULA</th>
+                                <th class="text-center small">NOMBRE</th>
+                                <th class="text-center small">APELLIDO</th>
+                                <th class="text-center small">EMAIL</th>
+                                <th class="text-center small">TELEFONO</th>
+                                 <th class="text-center small">DIRECCION</th>
+                                <th class="text-center small">ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for EmpleadosLt in Empleados %}
                                 <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ EmpleadosLt.Nombre }}</td>
-                                    <td>{{ EmpleadosLt.Apellido }}</td>
-                                    <td>{{ EmpleadosLt.CIdentidad }}</td>
-                                    <td>{{ EmpleadosLt.Email }}</td>
-                                    <td>{{ EmpleadosLt.Telefono }}</td>
-                                    <td>
-                                        <a href="{{path('VerEmpleado',{'idE': EmpleadosLt.id })}}" class='btn btn-xs btn-success'>Ver</a>
-                                        <a href="{{path('EditarEmpleado',{'idE': EmpleadosLt.id })}}"  class='btn btn-xs btn-primary'>Editar</a>
-                                        <a href="{{path('EliminarEmpleado',{'idED': EmpleadosLt.id })}}"  class='btn btn-xs btn-danger'>Eliminar</a>
-                                    </td>
+                                    <td class="text-center small">{{ loop.index }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.CIdentidad }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.Nombre }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.Apellido }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.Email }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.Telefono }}</td>
+                                    <td class="text-center small">{{ EmpleadosLt.Direccion }}</td>
+                                    <td class="col-xs-2">
+                                        <!-- MODAL EDITAR EMPLEADOS -->
+                                         <button type="button" id="actualizar" class="btn btn-xs btn-success btn-circle" data-toggle="modal" data-target="#{{EmpleadosLt.id }}" data-whatever="@mdo"> <i class="fa fa-pencil" title="EDITAR" aria-hidden="true"></i></button><small>Editar</small> 
+                                                    <div class="modal" id="{{ EmpleadosLt.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <form id="Editar" method="POST" action='{{ path('GuardarEditEmpleado',{'idEU':  EmpleadosLt.id }) }}'>                          
+                                                            <div class="modal-content">
+                                                                <div class="modal-header btn-primary">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                                                    <h5 class="modal-title" id="exampleModalLabel" align="center"><strong> ACTUALIZAR EMPLEADO</strong></h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class='row'>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Nº cedula: </strong>
+                                                                             <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{ EmpleadosLt.CIdentidad }}" id="Cedula" name="Cedula" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                         
+                                                                        </div>
+                                                                        <div class='col-sm-12'>                                                                          
+                                                                            <strong>Nombre:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{EmpleadosLt.Nombre }}" id="Nombre" name="Nombre" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                    
+                                                                        </div>
+                                                                       <div class='col-sm-12'>
+                                                                            <strong>Apellido:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{EmpleadosLt.Apellido }}" id="Apellido" name="Apellido" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                           <strong>Email:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{ EmpleadosLt.Email }}" id="Email" name="Email" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Telefono:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{EmpleadosLt.Telefono }}" id="TelefonoE" name="TelefonoE" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>  
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Direccion:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{EmpleadosLt.Direccion }}" id="DireccionE" name="DireccionE" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                      </div>          
+                                                                    </div>                                                    
+                                                                </div>
+                                                                <div class="modal-footer bg-gray">
+                                                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                                                    <button type="submit" id="actualizar" class="btn btn-success btn-xs"><span class="fa fa-check-circle"></span> Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>                            
+                                                    </div>
+                                                </div>
+                                        <!-- FIN EDITAR EMPLEADOS -->    
+                                        <a class="btn btn-danger btn-circle" href="{{path('EliminarEmpleado',{'idED': EmpleadosLt.id })}}"><i class="fa fa-trash-o fa-fw" title="ELIMINAR" aria-hidden="true"></i> <span class="sr-only">ELIMINAR</span></a><small>Eliminar</small>
+                                    </td> 
                                 </tr>
                             {% endfor %}
                         </tbody>

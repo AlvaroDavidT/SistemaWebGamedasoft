@@ -21,10 +21,11 @@
                         </div>
                         <hr>
                     </div>
-                    {% for cli in Empleado %}
-                        <form id="ActualizarCliente"class="form-horizontal">
-                            <div id="ActualizaCliente" data-path="{{path('UpdateEmpleado')}}"></div>  
-                            <div id="IdCliente" value="{{cli.id}}"></div>       
+                    {% for Empl in Empleado %}
+                        <form id="ActualizarEmpleado"class="form-horizontal">
+                              <div id="IdEmpleado" value="{{Empl.id}}"></div>   
+                            <div id="ActualizarEmpleadoPath" data-path="{{path('UpdateEmpleado')}}"></div>  
+                              
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for='NombreEmpleado'>Nombre Empleado:</label>
@@ -32,7 +33,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-pencil"></i>
                                         </div>
-                                        <input type="text" value="{{ cli.Nombre }}"  id="NombreCliente" name="NombreEmpleado" class="form-control  input-sm"/>
+                                        <input type="text" value="{{ Empl.Nombre }}"  id="NombreEmpleado" name="NombreEmpleado" class="form-control  input-sm"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -41,16 +42,16 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-pencil"></i>
                                         </div>
-                                        <input type="text" value="{{ cli.Direccion }}" id="DireccionEmpresa" name="DireccionEmpleado" class="form-control  input-sm"/>
+                                        <input type="text" value="{{ Empl.Direccion }}" id="DireccionEmpleado" name="DireccionEmpleado" class="form-control  input-sm"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for=TelefonoEmpleado">Telefono Empleado:</label>
+                                    <label class="col-sm-3 control-label" for="TelefonoEmpleado">Telefono Empleado:</label>
                                     <div class="input-group col-sm-2">
                                         <div class="input-group-addon">
                                             <i class="fa fa-phone"></i>
                                         </div>
-                                        <input type="text" value="{{cli.Telefono }}" id="TelefonoEmpresa" name="TelefonoEmpleado" class="form-control  input-sm"/>
+                                        <input type="text" value="{{Empl.Telefono }}" id="TelefonoEmpleado" name="TelefonoEmpleado" class="form-control  input-sm"/>
                                     </div>
                                 </div>
                                      
@@ -61,23 +62,23 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-envelope"></i>
                                         </div>
-                                        <input type="email" value="{{ cli.Email }}" id="MailEmpleado" name="MailEmpleado" class="form-control  input-sm"/>
+                                        <input type="email" value="{{ Empl.Email }}" id="MailEmpleado" name="MailEmpleado" class="form-control  input-sm"/>
                                     </div>
                                 </div><hr>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="CIEmpleado">Ruc:</label>
+                                    <label class="col-sm-3 control-label" for="CIEmpleado">Cedula Identidad:</label>
                                     <div class="input-group col-sm-3">
                                         <div class="input-group-addon">
                                             <i class="fa fa-qrcode"></i>
                                         </div>
-                                        <input  type="text" value="{{ cli.Cidentidad }}" id="RucEmpresa" name="CIEmpleado" class="form-control  input-sm " disabled/>
+                                        <input  type="text" value="{{ Empl.Cidentidad }}" id="RucEmpresa" name="CIEmpleado" class="form-control  input-sm " disabled/>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-footer">
                                 <div class='row'>
                                     <div class='col-xs-4 text-right'>
-                                        <button class="btn btn-success btn-sm" id="Guardar-Cliente">Guardar</button>
+                                        <button class="btn btn-success btn-sm" id="Guardar-Empleado">Guardar</button>
                                     </div>
                                     <div class='col-xs-4 text-left'>
                                         <div id="success" class=" col-xm-5 alert alert-success"  style="display: none;"> <strong>Exitosamente !!</strong> Datos Actualizados</div>

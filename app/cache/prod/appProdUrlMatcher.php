@@ -161,6 +161,88 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::GuardarRqClienteAction',  '_route' => 'GuardarReqCliente',);
         }
 
+        if (0 === strpos($pathinfo, '/ActualizaReq')) {
+            // ActualizaReq1
+            if ($pathinfo === '/ActualizaReq') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ActualizaRequerimientoAction',  '_route' => 'ActualizaReq1',);
+            }
+
+            // ActualizaReq
+            if (preg_match('#^/ActualizaReq/(?P<idRq>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'ActualizaReq')), array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ActualizaRequerimientoAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/EliminarReq')) {
+            // EliminaReq1
+            if ($pathinfo === '/EliminarReq') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::EliminarRequerimientoAction',  '_route' => 'EliminaReq1',);
+            }
+
+            // EliminaReq
+            if (preg_match('#^/EliminarReq/(?P<idRq>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminaReq')), array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::EliminarRequerimientoAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/ConsultaReqC')) {
+            // RequerimientosClientes
+            if (rtrim($pathinfo, '/') === '/ConsultaReqC') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'RequerimientosClientes');
+                }
+
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ConsultaReqAction',  '_route' => 'RequerimientosClientes',);
+            }
+
+            // RequerimientosModulosClientes
+            if (0 === strpos($pathinfo, '/ConsultaReqC/Modulo') && preg_match('#^/ConsultaReqC/Modulo/(?P<IdModulo>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosModulosClientes')), array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ConsultaModuloClientesAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/RequerimientosC')) {
+            // RequerimientosC
+            if ($pathinfo === '/RequerimientosC') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::RequerimientosCAction',  '_route' => 'RequerimientosC',);
+            }
+
+            if (0 === strpos($pathinfo, '/RequerimientosC/Fecha')) {
+                // RequerimientosCFechaInicial
+                if ($pathinfo === '/RequerimientosC/FechaInicialC') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::RequerimientosFechaInicialCAction',  '_route' => 'RequerimientosCFechaInicial',);
+                }
+
+                // RequerimientosCEntreFechas
+                if ($pathinfo === '/RequerimientosC/FechaEntreFechasC') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::RequerimientosEntreFechasCAction',  '_route' => 'RequerimientosCEntreFechas',);
+                }
+
+            }
+
+            if (0 === strpos($pathinfo, '/RequerimientosC/Estados')) {
+                // RequerimientosCEstados
+                if ($pathinfo === '/RequerimientosC/Estados') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::RequerimientosEntreFechasCAction',  '_route' => 'RequerimientosCEstados',);
+                }
+
+                // RequerimientosEstadosC
+                if (preg_match('#^/RequerimientosC/Estados/(?P<IdEstado>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosEstadosC')), array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ConsultaEstadosCAction',));
+                }
+
+            }
+
+            // RequerimientosModulos
+            if (0 === strpos($pathinfo, '/RequerimientosC/Modulos') && preg_match('#^/RequerimientosC/Modulos/(?P<IdModulo>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosModulos')), array (  '_controller' => 'Login\\firstBundle\\Controller\\ClienteController::ConsultaModulosCAction',));
+            }
+
+        }
+
         // Empleado
         if ($pathinfo === '/Empleado') {
             return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::EmpleadoAction',  '_route' => 'Empleado',);
@@ -204,22 +286,43 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
-        // UpdateEmpleado
-        if (rtrim($pathinfo, '/') === '/UpdateEmpleado') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'UpdateEmpleado');
+        if (0 === strpos($pathinfo, '/UpdateEmpleado')) {
+            // UpdateEmpleado
+            if (rtrim($pathinfo, '/') === '/UpdateEmpleado') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'UpdateEmpleado');
+                }
+
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::updateEmpleadoAction',  '_route' => 'UpdateEmpleado',);
             }
 
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::updateEmpleadoAction',  '_route' => 'UpdateEmpleado',);
+            // GuardarUpdateE
+            if (preg_match('#^/UpdateEmpleado/(?P<Empleado>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarUpdateE')), array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::GuardarEmpleadoAction',));
+            }
+
         }
 
-        // CambiarClaveEmpleado
-        if (rtrim($pathinfo, '/') === '/CambiarEClave') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'CambiarClaveEmpleado');
+        if (0 === strpos($pathinfo, '/CambiarEClave')) {
+            // CambiarClaveEmpleado
+            if (rtrim($pathinfo, '/') === '/CambiarEClave') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'CambiarClaveEmpleado');
+                }
+
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::CambiarClaveAction',  '_route' => 'CambiarClaveEmpleado',);
             }
 
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::CambiarClaveAction',  '_route' => 'CambiarClaveEmpleado',);
+            // PruebaClaveE
+            if (preg_match('#^/CambiarEClave/(?P<Empleado>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'PruebaClaveE')), array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::PruebaClaveEmpleadoAction',));
+            }
+
+            // GuardaClaveE
+            if (0 === strpos($pathinfo, '/CambiarEClave/Guardar') && preg_match('#^/CambiarEClave/Guardar/(?P<Empleado>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardaClaveE')), array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::GuardarClaveEmpleadoAction',));
+            }
+
         }
 
         // GuardarHojaT
@@ -228,7 +331,7 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return $this->redirect($pathinfo.'/', 'GuardarHojaT');
             }
 
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::GuardarRequerimientoAction',  '_route' => 'GuardarHojaT',);
+            return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::GuardarReqTiempoAction',  '_route' => 'GuardarHojaT',);
         }
 
         // Perfil
@@ -292,6 +395,11 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'PruebaClaveAdmin')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::PruebaClaveAction',));
                     }
 
+                    // GuardaClaveA
+                    if (0 === strpos($pathinfo, '/ActualizaClave/GuardarA') && preg_match('#^/ActualizaClave/GuardarA/(?P<idAdmin>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardaClaveA')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarClaveAdminAction',));
+                    }
+
                 }
 
             }
@@ -303,32 +411,55 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ListarEmpleadosAction',  '_route' => 'ConsultaEmpleados',);
         }
 
-        // GuardarEmpleado
-        if ($pathinfo === '/GuardarEmpleado') {
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoEmpleadoAction',  '_route' => 'GuardarEmpleado',);
-        }
-
-        if (0 === strpos($pathinfo, '/Empleado')) {
-            // VerEmpleado
-            if (0 === strpos($pathinfo, '/Empleado/ver') && preg_match('#^/Empleado/ver/(?P<idE>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'VerEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::VerEmpleadoAction',));
+        if (0 === strpos($pathinfo, '/Guardar')) {
+            // GuardarEmpleado
+            if ($pathinfo === '/GuardarEmpleado') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoEmpleadoAction',  '_route' => 'GuardarEmpleado',);
             }
 
-            // EditarEmpleado
-            if (0 === strpos($pathinfo, '/Empleado/Editar') && preg_match('#^/Empleado/Editar/(?P<idE>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EditarEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EditarEmpleadosAction',));
+            if (0 === strpos($pathinfo, '/Guardar/Editar')) {
+                // GuardarEditEmpleado1
+                if ($pathinfo === '/Guardar/Editar') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditEmpleadoAction',  '_route' => 'GuardarEditEmpleado1',);
+                }
+
+                // GuardarEditEmpleado
+                if (preg_match('#^/Guardar/Editar/(?P<idEU>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditEmpleadoAction',));
+                }
+
             }
 
         }
 
-        // GuardarEditEmpleado
-        if (0 === strpos($pathinfo, '/Guardar/Editar') && preg_match('#^/Guardar/Editar/(?P<idEU>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditEmpleadoAction',));
+        if (0 === strpos($pathinfo, '/Cedula')) {
+            // BuscaPorCedula
+            if (rtrim($pathinfo, '/') === '/Cedula') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'BuscaPorCedula');
+                }
+
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::BuscaCedulaAction',  '_route' => 'BuscaPorCedula',);
+            }
+
+            // BuscaPorCedula1
+            if (preg_match('#^/Cedula/(?P<idCedula>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'BuscaPorCedula1')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::BuscaCedulaAction',));
+            }
+
         }
 
-        // EliminarEmpleado
-        if (0 === strpos($pathinfo, '/Empleado/Eliminar') && preg_match('#^/Empleado/Eliminar/(?P<idED>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarEmpleadosAction',));
+        if (0 === strpos($pathinfo, '/Empleado/Eliminar')) {
+            // EliminarEmpleado1
+            if ($pathinfo === '/Empleado/Eliminar') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarEmpleadosAction',  '_route' => 'EliminarEmpleado1',);
+            }
+
+            // EliminarEmpleado
+            if (preg_match('#^/Empleado/Eliminar/(?P<idED>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarEmpleadosAction',));
+            }
+
         }
 
         // ConsultaClientes
@@ -341,27 +472,47 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoClienteAction',  '_route' => 'GuardarCliente',);
         }
 
-        if (0 === strpos($pathinfo, '/Cliente')) {
-            // VerCliente
-            if (0 === strpos($pathinfo, '/Cliente/ver') && preg_match('#^/Cliente/ver/(?P<idC>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'VerCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::VerClientesAction',));
+        if (0 === strpos($pathinfo, '/Ruc')) {
+            // BuscaPorRuc
+            if (rtrim($pathinfo, '/') === '/Ruc') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'BuscaPorRuc');
+                }
+
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::BuscaRucAction',  '_route' => 'BuscaPorRuc',);
             }
 
-            // EditarCliente
-            if (0 === strpos($pathinfo, '/Cliente/Editar') && preg_match('#^/Cliente/Editar/(?P<idC>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EditarCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EditarClienteAction',));
+            // BuscaPorRuc1
+            if (preg_match('#^/Ruc/(?P<idRuc>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'BuscaPorRuc1')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::BuscaRucAction',));
             }
 
         }
 
-        // GuardarEditCliente
-        if (0 === strpos($pathinfo, '/Guardar/EditarC') && preg_match('#^/Guardar/EditarC/(?P<idCU>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarClienteAction',));
+        if (0 === strpos($pathinfo, '/Guardar/EditarC')) {
+            // GuardarEditCliente1
+            if ($pathinfo === '/Guardar/EditarC') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarClienteAction',  '_route' => 'GuardarEditCliente1',);
+            }
+
+            // GuardarEditCliente
+            if (preg_match('#^/Guardar/EditarC/(?P<idCU>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarClienteAction',));
+            }
+
         }
 
-        // EliminarCliente
-        if (0 === strpos($pathinfo, '/Cliente/Eliminar') && preg_match('#^/Cliente/Eliminar/(?P<idCD>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarClienteAction',));
+        if (0 === strpos($pathinfo, '/Cliente/Eliminar')) {
+            // EliminarCliente1
+            if ($pathinfo === '/Cliente/Eliminar') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarClienteAction',  '_route' => 'EliminarCliente1',);
+            }
+
+            // EliminarCliente
+            if (preg_match('#^/Cliente/Eliminar/(?P<idCD>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarClienteAction',));
+            }
+
         }
 
         // ConsultaModulos
@@ -369,9 +520,38 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ListarModulosAction',  '_route' => 'ConsultaModulos',);
         }
 
-        // GuardarModulo
-        if ($pathinfo === '/GuardarModulo') {
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoModuloAction',  '_route' => 'GuardarModulo',);
+        if (0 === strpos($pathinfo, '/Guardar')) {
+            // GuardarModulo
+            if ($pathinfo === '/GuardarModulo') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoModuloAction',  '_route' => 'GuardarModulo',);
+            }
+
+            if (0 === strpos($pathinfo, '/Guardar/Editar')) {
+                // GuardarEditModuloA1
+                if ($pathinfo === '/Guardar/EditarModulo') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarClienteAction',  '_route' => 'GuardarEditModuloA1',);
+                }
+
+                // GuardarEditMenusA
+                if (0 === strpos($pathinfo, '/Guardar/Editarmenu') && preg_match('#^/Guardar/Editarmenu/(?P<idMenu>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditMenusA')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarMenuAction',));
+                }
+
+                if (0 === strpos($pathinfo, '/Guardar/EditarModulo')) {
+                    // GuardarEditMenusA1
+                    if ($pathinfo === '/Guardar/EditarModulo') {
+                        return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarModuloAction',  '_route' => 'GuardarEditMenusA1',);
+                    }
+
+                    // GuardarEditModuloA
+                    if (preg_match('#^/Guardar/EditarModulo/(?P<idModulo>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditModuloA')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarModuloAction',));
+                    }
+
+                }
+
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/M')) {
@@ -386,6 +566,11 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'DesactivaMod')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::DesactivaModuloAction',));
                 }
 
+                // EliminarModulo
+                if (0 === strpos($pathinfo, '/Modulo/Eliminar') && preg_match('#^/Modulo/Eliminar/(?P<idEM>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarModulo')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarModuloAction',));
+                }
+
             }
 
             if (0 === strpos($pathinfo, '/Menu')) {
@@ -394,16 +579,37 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                     return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ListarMenusAction',  '_route' => 'ConsultaMenus',);
                 }
 
-                // ActivaMenu
-                if (0 === strpos($pathinfo, '/Menu/Activa') && preg_match('#^/Menu/Activa/(?P<idMenu>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'ActivaMenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ActivaMenuAction',));
+                // EliminarMenu
+                if (0 === strpos($pathinfo, '/Menu/Eliminar') && preg_match('#^/Menu/Eliminar/(?P<idEMe>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarMenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarMenuAction',));
                 }
 
-                // DesactivaMenu
-                if (0 === strpos($pathinfo, '/Menu/Desactiva') && preg_match('#^/Menu/Desactiva/(?P<idMenu>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'DesactivaMenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::DesactivaMenuAction',));
-                }
+            }
 
+        }
+
+        if (0 === strpos($pathinfo, '/Submenu/Eliminar')) {
+            // EliminarSubmenus1
+            if ($pathinfo === '/Submenu/Eliminar') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarSubmenusAction',  '_route' => 'EliminarSubmenus1',);
+            }
+
+            // EliminarSubmenus
+            if (preg_match('#^/Submenu/Eliminar/(?P<idSm>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'EliminarSubmenus')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::EliminarSubmenusAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/Menu')) {
+            // ActivaMenu
+            if (0 === strpos($pathinfo, '/Menu/Activa') && preg_match('#^/Menu/Activa/(?P<idMenu>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'ActivaMenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ActivaMenuAction',));
+            }
+
+            // DesactivaMenu
+            if (0 === strpos($pathinfo, '/Menu/Desactiva') && preg_match('#^/Menu/Desactiva/(?P<idMenu>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'DesactivaMenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::DesactivaMenuAction',));
             }
 
         }
@@ -452,9 +658,25 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
-        // GuardarSubMenu
-        if ($pathinfo === '/GuardarSubMenu') {
-            return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoSubMenuAction',  '_route' => 'GuardarSubMenu',);
+        if (0 === strpos($pathinfo, '/Guardar')) {
+            // GuardarSubMenu
+            if ($pathinfo === '/GuardarSubMenu') {
+                return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarNuevoSubMenuAction',  '_route' => 'GuardarSubMenu',);
+            }
+
+            if (0 === strpos($pathinfo, '/Guardar/EditarSubMenu')) {
+                // GuardarEditSubMenusA1
+                if ($pathinfo === '/Guardar/EditarSubMenu') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarSubMenuAction',  '_route' => 'GuardarEditSubMenusA1',);
+                }
+
+                // GuardarEditSubMenusA
+                if (preg_match('#^/Guardar/EditarSubMenu/(?P<idSubMenu>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarEditSubMenusA')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::GuardarEditarSubMenuAction',));
+                }
+
+            }
+
         }
 
         // ConsultarRequerimientos
@@ -467,7 +689,7 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'GuardarAsignacion')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::AsignarAction',));
         }
 
-        if (0 === strpos($pathinfo, '/ConsultaReq')) {
+        if (0 === strpos($pathinfo, '/C')) {
             // Requerimientos
             if (rtrim($pathinfo, '/') === '/ConsultaReq') {
                 if (substr($pathinfo, -1) !== '/') {
@@ -477,39 +699,77 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaReqAction',  '_route' => 'Requerimientos',);
             }
 
-            if (0 === strpos($pathinfo, '/ConsultaReq/Fecha')) {
-                // RequerimientosFechaI
-                if ($pathinfo === '/ConsultaReq/FechaInicial') {
-                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaReqFechaInicialAction',  '_route' => 'RequerimientosFechaI',);
+            if (0 === strpos($pathinfo, '/C_Tiempos')) {
+                // ConsultaTiempos
+                if (rtrim($pathinfo, '/') === '/C_Tiempos') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'ConsultaTiempos');
+                    }
+
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaTiemposAction',  '_route' => 'ConsultaTiempos',);
                 }
 
-                // RequerimientosFechas
-                if ($pathinfo === '/ConsultaReq/Fechas') {
-                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaReqFechasAction',  '_route' => 'RequerimientosFechas',);
+                // ConsultaTiempos1
+                if (0 === strpos($pathinfo, '/C_Tiempos/Cliente') && preg_match('#^/C_Tiempos/Cliente/(?P<idCliente>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'ConsultaTiempos1')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaTiemposCAction',));
                 }
 
             }
 
-            // RequerimientosCliente
-            if (0 === strpos($pathinfo, '/ConsultaReq/Cliente') && preg_match('#^/ConsultaReq/Cliente/(?P<IdCliente>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaClientesAction',));
+            if (0 === strpos($pathinfo, '/Consul')) {
+                if (0 === strpos($pathinfo, '/ConsultaReq')) {
+                    if (0 === strpos($pathinfo, '/ConsultaReq/Fecha')) {
+                        // RequerimientosFechaI
+                        if ($pathinfo === '/ConsultaReq/FechaInicial') {
+                            return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaReqFechaInicialAction',  '_route' => 'RequerimientosFechaI',);
+                        }
+
+                        // RequerimientosFechas
+                        if ($pathinfo === '/ConsultaReq/Fechas') {
+                            return array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaReqFechasAction',  '_route' => 'RequerimientosFechas',);
+                        }
+
+                    }
+
+                    // RequerimientosCliente
+                    if (0 === strpos($pathinfo, '/ConsultaReq/Cliente') && preg_match('#^/ConsultaReq/Cliente/(?P<IdCliente>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosCliente')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaClientesAction',));
+                    }
+
+                    // RequerimientosEstado
+                    if (0 === strpos($pathinfo, '/ConsultaReq/Estado') && preg_match('#^/ConsultaReq/Estado/(?P<IdEstado>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosEstado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaEstadoAction',));
+                    }
+
+                    // RequerimientosModulo
+                    if (0 === strpos($pathinfo, '/ConsultaReq/Modulo') && preg_match('#^/ConsultaReq/Modulo/(?P<IdModulo>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosModulo')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaModuloAction',));
+                    }
+
+                    // RequerimientosEmpleado
+                    if (0 === strpos($pathinfo, '/ConsultaReq/Empleado') && preg_match('#^/ConsultaReq/Empleado/(?P<IdEmpleado>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaEmpleadoAction',));
+                    }
+
+                    // ConsulReqEmp
+                    if ($pathinfo === '/ConsultaReqE') {
+                        return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::ConsultaReqEAction',  '_route' => 'ConsulReqEmp',);
+                    }
+
+                }
+
+                // ConsulReqTiempos
+                if ($pathinfo === '/ConsulReqTiempos') {
+                    return array (  '_controller' => 'Login\\firstBundle\\Controller\\EmpleadoController::ConsulReqTiemposAction',  '_route' => 'ConsulReqTiempos',);
+                }
+
             }
 
-            // RequerimientosEstado
-            if (0 === strpos($pathinfo, '/ConsultaReq/Estado') && preg_match('#^/ConsultaReq/Estado/(?P<IdEstado>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosEstado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaEstadoAction',));
-            }
+        }
 
-            // RequerimientosModulo
-            if (0 === strpos($pathinfo, '/ConsultaReq/Modulo') && preg_match('#^/ConsultaReq/Modulo/(?P<IdModulo>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosModulo')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaModuloAction',));
-            }
-
-            // RequerimientosEmpleado
-            if (0 === strpos($pathinfo, '/ConsultaReq/Empleado') && preg_match('#^/ConsultaReq/Empleado/(?P<IdEmpleado>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'RequerimientosEmpleado')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::ConsultaEmpleadoAction',));
-            }
-
+        // BuscaSubmenu
+        if (0 === strpos($pathinfo, '/Submenu/Busca') && preg_match('#^/Submenu/Busca/(?P<idSub>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'BuscaSubmenu')), array (  '_controller' => 'Login\\firstBundle\\Controller\\AdminController::BuscaSubmenuAction',));
         }
 
         // homepage

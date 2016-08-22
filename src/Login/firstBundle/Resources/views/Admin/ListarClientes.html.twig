@@ -12,133 +12,255 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                {% for flashMessage in app.session.flashbag.get('mensaje')%}
-                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                 {% for flashMessage in app.session.flashbag.get('MensajeUpdate')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
                 {% endfor%}
-               <div id="myModal" class="modal fade" role="dialog">
-                   <div class="modal-dialog">
-                       <!-- Modal content-->
-                       <div class="modal-content">
-                           <div class="modal-header btn-primary ">
-                               <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
-                               <h5 class="modal-title">Nuevo Cliente</h5>
-                           </div>                                      
-                       <form id="cliente" method="Post" class="form-horizontal" action='{{ path('GuardarCliente') }}'>
-                           <div class="modal-body">                              
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for='nombreC'>Nombre:</label>
-                        <div class="input-group col-sm-5">
-                            <div class="input-group-addon">
-                                <i class="fa fa-pencil"></i>
-                            </div>
-                            <input type="text"  id="nombreC" name="nombreC" class="form-control  input-sm"/>
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('MensajeError')%}
+                    <div class="alert alert-danger"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                 {% for flashMessage in app.session.flashbag.get('MensajeExitoso')%}
+                     <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                {% endfor%}
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header btn-primary ">
+                                <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
+                                <h5 class="modal-title" align="center"><strong>INGRESO NUEVO CLIENTE</strong></h5>
+                            </div>                                      
+                            <form id="cliente" method="Post" class="form-horizontal" action='{{ path('GuardarCliente') }}'>
+                                <div class="modal-body">  
+                                    <div class='row'>
+                                         <div class='col-sm-12'>
+                                            <strong>Nombre: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                    <input type="text"  id="NombreCN" name="NombreCN" class="form-control  input-sm "/>                                                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                         
+                                         <div class='col-sm-12'>
+                                            <strong>Usuario: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                    <input type="text"  id="NombreCN" name="UsuarioCN" class="form-control  input-sm "/>                                                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class='col-sm-12'>
+                                            <strong>Ruc: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                 <input type="text" id="RucCN" name="RucCN" class="form-control  input-sm"/>                                                                       
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-12'>
+                                            <strong>Telefóno: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                    <input type="text" id="TelefonoCN" name="TelefonoCN" class="form-control  input-sm"/>                                            
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        <div class='col-sm-12'>
+                                            <strong>Dirección: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                     <input type="text" id="DireccionCN" name="DireccionCN"  class="form-control  input-sm"/>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                         <div class='col-sm-12'>
+                                            <strong>Correo Electrónico: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                 <input type="email" id="MailCN" name="MailCN" class="form-control  input-sm"/>
+                                                                                  </div>
+                                            </div> 
+                                         </div>
+                                        <div class='col-sm-12'>
+                                            <strong>Contacto: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                                    <input type="Text" id="ContactoCN" name="ContactoCN" class="form-control  input-sm"/>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                         <div class='col-sm-12'>
+                                            <strong>Clave Temporal: </strong>
+                                            <div class='row'>
+                                                <div class='col-xs-12 col-sm-12'>
+                                            <input type="Text" id="ClaveTC" name="ClaveTC" class="form-control  input-sm"/>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="modal-footer">
+                            <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                    <button type="submit" class="btn btn-success btn-xs" id="btn-envia"><span class="fa fa-check-circle"></span> Guardar</button>
+                                    </div>
+                            </form>
                         </div>
-                    </div>
-                   <div class="form-group">
-                        <label class="col-sm-3 control-label" for='UsuarioC'>Usuario:</label>
-                        <div class="input-group col-sm-4">
-                            <div class="input-group-addon">
-                                <i class="fa fa-pencil"></i>
-                            </div>
-                            <input type="text" id="UsuarioC" name="UsuarioC" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="ruc">Ruc:</label>
-                        <div class="input-group col-sm-4">
-                            <div class="input-group-addon">
-                                <i class="fa fa-qrcode"></i>
-                            </div>
-                            <input type="text" id="ruc" name="ruc" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="telefonoC">Telefóno:</label>
-                        <div class="input-group col-sm-4">
-                            <div class="input-group-addon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <input type="text" id="telefonoC" name="telefonoC" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="direccionC">Dirección:</label>
-                        <div class="input-group col-sm-5">
-                            <div class="input-group-addon">
-                                <i class="fa fa-map-marker"></i>
-                            </div>
-                            <input type="text" id="direccionC" name="direccionC"  class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="mailC">Correo Electrónico:</label>
-                        <div class="input-group col-sm-4">
-                            <div class="input-group-addon">
-                                <i class="fa fa-envelope"></i>
-                            </div>
-                            <input type="email" id="mailC" name="mailC" class="form-control  input-sm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                    <label class="col-sm-3 control-label" for="contactoC">Contacto:</label>
-                       <div class="input-group col-sm-5">
-                           <div class="input-group-addon">
-                               <i class="fa fa-user"></i>
-                           </div>
-                           <input type="Text" id="contactoC" name="contactoC" class="form-control  input-sm"/>
-                       </div>
-                   </div>
-                     <div class="form-group">
-                    <label class="col-sm-3 control-label" for="claveTC">Clave Temporal:</label>
-                       <div class="input-group col-sm-3">
-                           <div class="input-group-addon">
-                               <i class="fa fa-key"></i>
-                           </div>
-                           <input type="Text" id="claveTC" name="claveTC" class="form-control  input-sm"/>
-                       </div>
-                   </div>
-                       </div>
-                           <div class="modal-footer">
-                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                               <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
-                           </div>
-                           </form>
-                       </div>
 
-                   </div>
-               </div>  
-               <div class="panel panel-primary">
-                   <div class="panel-heading">
-                    <div class='row'>
-                        <div class='col-xs-6 '>Lista de clientes</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
                     </div>
-                       <hr>
-                   </div>
-                       <div class="panel-body">
+                </div>  
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class='row'>
+                            <div class='col-xs-6 '><strong>Lista de clientes</strong></div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="example2" class="table table-hover table-condensed">
+                            <div class="table-responsive">
+                            <div class="col-md-12">
+                                <p class="text-info">
+                                    <br>
+                                    <small><strong> TOTAL DE REGISTROS: <span class="badge">{{Clientes|length}}</span></strong></small>
+                                    <br></p>                         
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel panel-danger col-md-12">
+                                    <div id="PathReqEliminarC" data-path="{{path('EliminarCliente1')}}"></div>
+                                    <div id="PathBuscaRuc" data-path="{{path('BuscaPorRuc')}}"></div> 
+                                    <div id="ActualizaC" data-path="{{path('GuardarEditCliente1')}}"></div>
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <strong>Buscar por Nº de RUC: <i class="fa fa-search" aria-hidden="true"></i></strong>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group col-sm-3">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-qrcode"></i>
+                                                </div>
+                                                <input type="text" value="" id="BSubmenu" name="BSubmenu" class="form-control  input-sm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 text-center"><div class="loading1"></div>
+                                </div>
+                            </div>
+                            <table id="Clientes" class="table table-bordered">
                                 <thead class='bg-success'>
                                     <tr> 
-                                        <th>#</th>
-                                        <th>NOMBRE</th>
-                                        <th>RUC</th>
-                                        <th>EMAIL</th>
-                                        <th>TELEFONO</th>
-                                        <th>ACCIONES</th>
+                                        <th class="text-center small">Nº</th>
+                                        <th class="text-center small">RUC</th>
+                                        <th class="text-center small">NOMBRE</th>
+                                        <th class="text-center small">USUARIO</th>
+                                        <th class="text-center small">EMAIL</th>
+                                        <th class="text-center small">TELEFONO</th>
+                                        <th class="text-center small">DIRECCION</th>
+                                        <th class="text-center small">CONTACTO</th>
+                                        <th class="text-center small">ACCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for Clientes in Clientes %}
                                         <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ Clientes.Nombre }}</td>
-                                            <td>{{ Clientes.Ruc }}</td>
-                                            <td>{{ Clientes.Email }}</td>
-                                            <td>{{ Clientes.Telefono }}</td>
-                                            <td>
-                                                <a href="{{path('VerCliente',{'idC': Clientes.id })}}" class='btn btn-xs btn-success'>Ver</a>
-                                                <a href="{{path('EditarCliente',{'idC': Clientes.id })}}"  class='btn btn-xs btn-primary'>Editar</a>
-                                                <a href="{{path('EliminarCliente',{'idCD': Clientes.id })}}"  class='btn btn-xs btn-danger'>Eliminar</a>
+                                            <td class="text-center small">{{ loop.index }}</td>
+                                             <td class="text-center small">{{ Clientes.Ruc }}</td>
+                                            <td class="text-left small">{{ Clientes.Nombre }}</td>
+                                            <td class="text-left small">{{ Clientes.Usuario }}</td>
+                                            <td class="text-left small">{{ Clientes.Email }}</td>
+                                            <td class="text-left small">{{ Clientes.Telefono }}</td>
+                                             <td class="text-left small">{{ Clientes.Direccion }}</td>
+                                             <td class="text-left small">{{ Clientes.Contacto }}</td>
+                                            <td class="">
+                                                 <!-- MODAL EDITAR CLIENTES -->
+                                         <button type="button" id="actualizar" class="btn btn-xs btn-success btn-circle" data-toggle="modal" data-target="#{{Clientes.id }}" data-whatever="@mdo"> <i class="fa fa-pencil" title="EDITAR" aria-hidden="true"></i></button><small>Editar</small> 
+                                                    <div class="modal" id="{{ Clientes.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <form id="Editar" method="POST" action='{{ path('GuardarEditCliente',{'idCU':  Clientes.id }) }}'>                          
+                                                            <div class="modal-content">
+                                                                <div class="modal-header btn-primary">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                                                    <h5 class="modal-title" id="exampleModalLabel" align="center"><strong> ACTUALIZAR CLIENTE</strong></h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class='row'>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Nº RUC: </strong>
+                                                                             <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{ Clientes.Ruc  }}" id="ruc" name="ruc" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                         
+                                                                        </div>
+                                                                        <div class='col-sm-12'>                                                                          
+                                                                            <strong>Nombre:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{Clientes.Nombre }}" id="nombreC" name="nombreC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                    
+                                                                        </div>
+                                                                       <div class='col-sm-12'>
+                                                                            <strong>Usuario:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{Clientes.Usuario }}" id="UsuarioC" name="UsuarioC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                           <strong>Email:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{ Clientes.Email }}" id="mailC" name="mailC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Telefono:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{Clientes.Telefono }}" id="telefonoC" name="telefonoC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>  
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Direccion:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{Clientes.Direccion }}" id="direccionC" name="direccionC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                      </div>   
+                                                                     <div class='col-sm-12'>
+                                                                            <strong>Contacto:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                  <input type="text" value="{{Clientes.Contacto }}" id="contactoC" name="contactoC" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>
+                                                                      </div> 
+                                                                    </div>                                                    
+                                                                </div>
+                                                                <div class="modal-footer bg-gray">
+                                                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                                                    <button type="submit" id="actualizar" class="btn btn-success btn-xs"><span class="fa fa-check-circle"></span> Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>                            
+                                                    </div>
+                                                </div>
+                                        <!-- FIN EDITAR EMPLEADOS -->    
+                                                  <a class="btn btn-danger btn-circle" href="{{path('EliminarCliente',{'idCD': Clientes.id })}}" ><i class="fa fa-trash-o fa-fw" title="ELIMINAR" aria-hidden="true"></i> <span class="sr-only">ELIMINAR</span></a><small>Eliminar</small>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -147,8 +269,8 @@
                         </div>
 
                     </div> 
-                           </div>
-                       </div><!-- /.box -->
-                   </div>
-               </section><!-- /.content -->
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </section><!-- /.content -->
 {% endblock %}

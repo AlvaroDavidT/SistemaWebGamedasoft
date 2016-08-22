@@ -184,8 +184,8 @@ class AdminController extends Controller {
             $Cedula = $request->get('cedula');
             $Direccion = $request->get('direccion');
             $Telefono = $request->get('telefono');
-            $Genero = $request->get('genero');
-            $idDepartamento = $request->get('departamento');
+          //  $Genero = $request->get('genero');
+          //  $idDepartamento = $request->get('departamento');
             $Mail = $request->get('mail');
             $ClaveT = $request->get('claveT');
             // Creación del objeto
@@ -195,17 +195,17 @@ class AdminController extends Controller {
             $Empleado->setCidentidad($Cedula);
             $Empleado->setDireccion($Direccion);
             $Empleado->setTelefono($Telefono);
-            $Empleado->setGenero($Genero);
+            //$Empleado->setGenero($Genero);
             $Empleado->setEmail($Mail);
             $Empleado->setPerfiles($Perfil);
             $Empleado->setPassword($ClaveT);
             // Relación con Departamento
-            $Departa = $em->getRepository('LoginfirstBundle:Departamentos')->find($idDepartamento);
-            $Empleado->setDepartamentos($Departa);
+           // $Departa = $em->getRepository('LoginfirstBundle:Departamentos')->find($idDepartamento);
+           // $Empleado->setDepartamentos($Departa);
             $em->persist($Empleado);
             //$em->persist($category);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('mensaje', 'Datos Guardados');
+            $this->get('session')->getFlashBag()->add('mensaje', 'Datos Guardados Exitosamente');
             return $this->redirect($this->generateUrl('ConsultaEmpleados'));
         } else {
             $this->get('session')->getFlashBag()->add('mensaje', 'Debes Iniciar Sesion');
@@ -213,31 +213,7 @@ class AdminController extends Controller {
         }
     }
 
-    public function EditarEmpleadosAction($idE, Request $request) {
-        $session = $request->getSession();
-        if ($session->has("id")) {
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery
-                            (
-                            'SELECT e.id,e.nombre,e.apellido,e.cidentidad,e.direccion,e.email,e.telefono,e.genero,d.nombre Departamento,d.id DepartamentoId
-                    FROM LoginfirstBundle:Empleados e
-                    JOIN LoginfirstBundle:Departamentos d WITH e.departamentos= d.id  
-                    where e.id = :Cli
-                 '
-                    )->setParameter('Cli', $idE);
-            $Empleado = $query->getResult();
-            //        print_r($Empleado);
-            //exit();
-            return $this->render('LoginfirstBundle:Admin:EditarEmpleado.html.twig', array('Empleado' => $Empleado));
-        } else {
-            $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Debes Inicar Sesion'
-            );
-            return $this->redirect($this->generateUrl('Login'));
-        }
-    }
-
-    public function GuardarEditEmpleadoAction($idEU, Request $request) {
+    public function GuardarEditEmpleadoAction(Request $request,$idEU) {
         $session = $request->getSession();
         if ($session->has("id")) {
             $em = $this->getDoctrine()->getManager();
@@ -247,24 +223,53 @@ class AdminController extends Controller {
                         'Empleado no Encontrado ' . $idEU
                 );
             }
-            $Nombres = $request->get('nombre');
-            $Apellidos = $request->get('apellidos');
-            $Cedula = $request->get('cedula');
-            $Direccion = $request->get('direccion');
-            $Telefono = $request->get('telefono');
-            $Mail = $request->get('mail');
+            $Cedula=$request->get('Cedula');
+            $Nombres = $request->get('Nombre');
+            $Apellidos = $request->get('Apellido');
+            $Mail = $request->get('Email');
+            $Telefono = $request->get('TelefonoE');           
+            $Direccion = $request->get('DireccionE');
+            $Empleado->setCidentidad($Cedula);
             $Empleado->setNombre($Nombres);
             $Empleado->setApellido($Apellidos);
-            $Empleado->setCidentidad($Cedula);
+            $Empleado->setEmail($Mail);
             $Empleado->setDireccion($Direccion);
             $Empleado->setTelefono($Telefono);
-            $Empleado->setEmail($Mail);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Datos Actualizados'
+                    'mensaje', 'Datos Actualizados Exitosamente'
             );
             return $this->redirect($this->generateUrl('ConsultaEmpleados'));
 
+            // return $this->render('LoginfirstBundle:Clientes:UpdateCliente.html.twig', array('Clientes' => $Clientes));
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+    public function BuscaCedulaAction(Request $request, $idCedula) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+
+         //   $repository = $this->getDoctrine()->getRepository('LoginfirstBundle:Empleados');
+          // $Empleados = $repository->findByCidentidad($idCedula);
+              $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQuery(
+                    'SELECT p
+    FROM LoginfirstBundle:Empleados p
+    WHERE p.cidentidad=:Cliente 
+    
+                  '
+                    )->setParameter('Cliente', $idCedula);
+
+            $Empleados = $query->getArrayResult();
+            $response = new Response(json_encode($Empleados));
+            
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
             // return $this->render('LoginfirstBundle:Clientes:UpdateCliente.html.twig', array('Clientes' => $Clientes));
         } else {
             $this->get('session')->getFlashBag()->add(
@@ -279,17 +284,24 @@ class AdminController extends Controller {
         if ($session->has("id")) {
             $em = $this->getDoctrine()->getManager();
             $Empleado = $em->getRepository('LoginfirstBundle:Empleados')->find($idED);
-
-            if (!$Empleado) {
-                throw $this->createNotFoundException(
-                        'No se encuentra el empleado con ID' . $idED
-                );
-            }
-            $em->remove($Empleado);
+            $query=$em->createQuery(
+                    'SELECT r.id id
+                    FROM LoginfirstBundle:Requerimientos r                   
+                    where r.asignadoemp=:Empleado                                  
+                   '
+            )->setParameter('Empleado',$Empleado);
+              $requerimientos=$query->getArrayResult(); 
+           if (count($requerimientos)== 0) {
+               $em->remove($Empleado);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Empleado Eliminado');
-            return $this->redirect($this->generateUrl('ConsultaEmpleados'));
+                    'MensajeExitoso', 'Empleado Eliminado');
+            return $this->redirect($this->generateUrl('ConsultaEmpleados'));            
+            } else {
+               $this->get('session')->getFlashBag()->add(
+                        'MensajeError', 'Empleado No puede ser eliminado esta siendo utilizado');
+                return $this->redirect($this->generateUrl('ConsultaEmpleados'));
+            }             
         } else {
             $this->get('session')->getFlashBag()->add(
                     'mensaje', 'Debes Iniciar Sesion'
@@ -297,7 +309,6 @@ class AdminController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
-
     /*
      * ajax menu
      * 
@@ -362,14 +373,14 @@ class AdminController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $Perfil = $em->getRepository('LoginfirstBundle:Perfiles')->find(3);
             // Variables obtenidas del formulario
-            $Nombre = $request->get('nombreC');
-            $Usuario = $request->get('UsuarioC');
-            $Ruc = $request->get('ruc');
-            $Direccion = $request->get('direccionC');
-            $Telefono = $request->get('telefonoC');
-            $Mail = $request->get('mailC');
-            $Contacto = $request->get('contactoC');
-            $ClaveT = $request->get('claveTC');
+            $Nombre = $request->get('NombreCN');
+            $Usuario = $request->get('UsuarioCN');
+            $Ruc = $request->get('RucCN');
+            $Direccion = $request->get('DireccionCN');
+            $Telefono = $request->get('TelefonoCN');
+            $Mail = $request->get('MailCN');
+            $Contacto = $request->get('ContactoCN');
+            $ClaveT = $request->get('ClaveTC');
             // Creación del objeto
             $Cliente = new Clientes();
             $Cliente->setNombre($Nombre);
@@ -391,51 +402,6 @@ class AdminController extends Controller {
         }
     }
 
-    public function VerClientesAction($idC, Request $request) {
-        $session = $request->getSession();
-        if ($session->has("id")) {
-
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery
-                            (
-                            'SELECT c.nombre,c.usuario,c.ruc,c.direccion,c.telefono,c.contacto,c.email
-                    FROM LoginfirstBundle:Clientes c
-                    where c.id = :Cli
-                 '
-                    )->setParameter('Cli', $idC);
-            $Cliente = $query->getResult();
-
-            return $this->render('LoginfirstBundle:Admin:VerCliente.html.twig', array('Cliente' => $Cliente));
-        } else {
-            $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Debes Iniciar Sesion'
-            );
-            return $this->redirect($this->generateUrl('Login'));
-        }
-    }
-
-    public function EditarClienteAction($idC, Request $request) {
-        $session = $request->getSession();
-        if ($session->has("id")) {
-
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery
-                            (
-                            'SELECT c.id,c.nombre,c.usuario,c.ruc,c.direccion,c.telefono,c.contacto,c.email
-                    FROM LoginfirstBundle:Clientes c
-                    where c.id = :Cli
-                 '
-                    )->setParameter('Cli', $idC);
-            $Cliente = $query->getResult();
-
-            return $this->render('LoginfirstBundle:Admin:EditarCliente.html.twig', array('Cliente' => $Cliente));
-        } else {
-            $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Debes Iniciar Sesion'
-            );
-            return $this->redirect($this->generateUrl('Login'));
-        }
-    }
 
     public function GuardarEditarClienteAction($idCU, Request $request) {
         $session = $request->getSession();
@@ -480,17 +446,26 @@ class AdminController extends Controller {
         if ($session->has("id")) {
             $em = $this->getDoctrine()->getManager();
             $Cliente = $em->getRepository('LoginfirstBundle:Clientes')->find($idCD);
-
-            if (!$Cliente) {
-                throw $this->createNotFoundException(
-                        'No se encuentra el cliente con ID' . $idCD
-                );
+            //consulta para verificar si existe o no 
+            $query = $em->createQuery(
+                            'SELECT r.id id
+                    FROM LoginfirstBundle:Requerimientos r                   
+                    where r.clientes=:Cliente                                  
+                   '
+                    )->setParameter('Cliente', $Cliente);
+            $requerimientos = $query->getArrayResult();
+            if (count($requerimientos) == 0) {
+                $em->remove($Cliente);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeExitoso', 'Cliente Eliminado');
+                return $this->redirect($this->generateUrl('ConsultaClientes'));
+            } else {
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeError', 'Cliente No puede ser eliminado esta siendo utilizado');
+                return $this->redirect($this->generateUrl('ConsultaClientes'));
             }
-            $em->remove($Cliente);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add(
-                    'mensaje', 'Cliente Eliminado');
-            return $this->redirect($this->generateUrl('ConsultaClientes'));
+///           
         } else {
             $this->get('session')->getFlashBag()->add(
                     'mensaje', 'Debes logearte Iniciar Sesion'
@@ -498,6 +473,36 @@ class AdminController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
+    public function BuscaRucAction(Request $request, $idRuc) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+
+         //   $repository = $this->getDoctrine()->getRepository('LoginfirstBundle:Empleados');
+          // $Empleados = $repository->findByCidentidad($idCedula);
+              $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQuery(
+                    'SELECT c
+    FROM LoginfirstBundle:Clientes c
+    WHERE c.ruc=:Cliente 
+    
+                  '
+                    )->setParameter('Cliente', $idRuc);
+
+            $Clientes = $query->getArrayResult();
+            $response = new Response(json_encode($Clientes));
+            
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+            // return $this->render('LoginfirstBundle:Clientes:UpdateCliente.html.twig', array('Clientes' => $Clientes));
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+
     /*
      * ===================================CRUD DE MODULOS===================================================
      */
@@ -545,6 +550,64 @@ class AdminController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
+       public function GuardarEditarModuloAction(Request $request,$idModulo) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            // Entity Manager
+             $em = $this->getDoctrine()->getManager();
+            $Modulos = $em->getRepository('LoginfirstBundle:Modulos')->find($idModulo);
+            if (!$Modulos) {
+                throw $this->createNotFoundException(
+                        'Cliente no Encontrado ' . $idModulo
+                );
+            }
+            $ModNombre = $request->get('ModNombre');
+            $ModDescripcion= $request->get('ModDescripcion');
+            $Modulos->setNombre($ModNombre);
+            $Modulos->setDescripcion($ModDescripcion);
+            $Modulos->setEstado('1');
+
+            $em->persist($Modulos);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('mensaje', 'Módulo editado ');
+            return $this->redirect($this->generateUrl('ConsultaModulos'));
+        } else {
+            $this->get('session')->getFlashBag()->add('mensaje', 'Debes logearte primero');
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+    public function EliminarModuloAction($idEM, Request $request) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            $em = $this->getDoctrine()->getManager();
+            $Modulo = $em->getRepository('LoginfirstBundle:Modulos')->find($idEM);
+            //consulta para verificar si existe o no 
+            $query = $em->createQuery(
+                            'SELECT m.id id
+                    FROM LoginfirstBundle:Menus m                   
+                    where m.modulos=:modulo                                  
+                   '
+                    )->setParameter('modulo', $Modulo);
+            $modulos = $query->getArrayResult();
+            if (count($modulos) == 0) {
+                $em->remove($Modulo);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeExitoso', 'Modulo Eliminado');
+                return $this->redirect($this->generateUrl('ConsultaModulos'));
+            } else {
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeError', 'Modulo No puede ser eliminado esta siendo utilizado');
+                return $this->redirect($this->generateUrl('ConsultaModulos'));
+            }          
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes logearte Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+
     public function ActivaModuloAction($idMod, Request $request) {
         $session = $request->getSession();
         if ($session->has("id")) {
@@ -588,7 +651,7 @@ class AdminController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery
                 (
-                            'SELECT m.id idMenu,m.nombre NombreMenu,m.estado EstadoMenu,d.nombre Modulo
+                            'SELECT m.id idMenu,m.nombre NombreMenu,m.estado EstadoMenu,d.nombre Modulo, d.id ModuloId
                     FROM LoginfirstBundle:Menus m
                     JOIN LoginfirstBundle:Modulos d WITH d.id= m.modulos  
                     Order by Modulo DESC
@@ -667,7 +730,65 @@ class AdminController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
-
+     public function GuardarEditarMenuAction(Request $request,$idMenu) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            // Entity Manager
+             $em = $this->getDoctrine()->getManager();
+            $Menus = $em->getRepository('LoginfirstBundle:Menus')->find($idMenu);
+            if (!$Menus) {
+                throw $this->createNotFoundException(
+                        'Cliente no Encontrado ' . $idMenu
+                );
+            }
+              //datos del form
+            $MenuNombre = $request->get('MeNombre');    
+            $MenuModulo= $request->get('MenuD');       
+            $Menus->setNombre($MenuNombre);
+            $Menus->setEstado('1');       
+            //relacion con modulo
+            $modulo=$em->getRepository('LoginfirstBundle:Modulos')->find($MenuModulo);
+            $Menus->setModulos($modulo);       
+            $em->persist($Menus);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('mensaje', 'Menu editado');
+            return $this->redirect($this->generateUrl('ConsultaMenus'));
+        } else {
+            $this->get('session')->getFlashBag()->add('mensaje', 'Debes Iniciar Sesion');
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+    public function EliminarMenuAction($idEMe, Request $request) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            $em = $this->getDoctrine()->getManager();
+            $Menus = $em->getRepository('LoginfirstBundle:Menus')->find($idEMe);
+            //consulta para verificar si existe o no 
+            $query = $em->createQuery(
+                            'SELECT s.id id
+                    FROM LoginfirstBundle:Submenus s                   
+                    where s.menus=:menus                                  
+                   '
+                    )->setParameter('menus', $Menus);
+            $menusC = $query->getArrayResult();
+            if (count($menusC) == 0) {
+                $em->remove($Menus);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeExitoso', 'Menu Eliminado');
+                return $this->redirect($this->generateUrl('ConsultaMenus'));
+            } else {
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeError', 'Menu No puede ser eliminado esta siendo utilizado');
+                return $this->redirect($this->generateUrl('ConsultaMenus'));
+            }          
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes logearte Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
     /*
      * ===================================CRUD DE SUBMENUS===================================================
      */
@@ -677,7 +798,7 @@ class AdminController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery
                 (
-                            'SELECT s.id idSubMenu,s.nombre NombreSubMenu,s.estado EstadoSubMenu,d.nombre Modulo,m.nombre Menu
+                            'SELECT s.id idSubMenu,s.nombre NombreSubMenu,s.estado EstadoSubMenu,d.id ModuloId, d.nombre Modulo,m.nombre Menu
                     FROM LoginfirstBundle:Submenus s
                     JOIN LoginfirstBundle:Menus m WITH s.menus= m.id
                     JOIN LoginfirstBundle:Modulos d WITH m.modulos=d.id
@@ -692,8 +813,9 @@ class AdminController extends Controller {
                     '
                     )->setParameter('Est', 1);
             $Modulos=$queryModulo->getResult();
-            
-            return $this->render('LoginfirstBundle:Admin:ListarSubMenus.html.twig', array('SubMenus' => $Submenus,'Modulos'=>$Modulos));
+            $SubmenusB=$em->getRepository('LoginfirstBundle:Submenus')->findAll();            
+
+            return $this->render('LoginfirstBundle:Admin:ListarSubMenus.html.twig', array('SubMenus' => $Submenus,'Modulos'=>$Modulos,'SubmenusB'=>$SubmenusB));
         } else {
             $this->get('session')->getFlashBag()->add(
                     'mensaje', 'Debes Iniciar Sesion'
@@ -733,6 +855,40 @@ class AdminController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
+    
+       public function EliminarSubmenusAction(Request $request,$idSm) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            $em = $this->getDoctrine()->getManager();
+            $Submenus =$em->getRepository('LoginfirstBundle:Submenus')->find($idSm);
+            $query = $em->createQuery
+                    (
+                    'SELECT r.id RqId,s.nombre Submenu
+                    FROM LoginfirstBundle:Requerimientos r
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id                     
+                    where s.id=:submenu                                  
+                   '
+            )->setParameter('submenu',$Submenus);
+              $requerimientos=$query->getArrayResult();           
+            if (count($requerimientos)== 0) {
+                $em->remove($Submenus);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'MensajeExitoso', 'Submenu Eliminado Exitosamente !!!!!!');
+                return $this->redirect($this->generateUrl('ConsultaSubMenus'));              
+            } else {
+               $this->get('session')->getFlashBag()->add(
+                        'MensajeError', 'Submenu No se puede eliminar esta siendo utilizado');
+                return $this->redirect($this->generateUrl('ConsultaSubMenus'));
+            }       
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes logearte Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+    
     public function GuardarNuevoSubMenuAction(Request $request) {
         $session = $request->getSession();
         if ($session->has("id")) {
@@ -750,7 +906,37 @@ class AdminController extends Controller {
             $Submenus->setMenus($menu);       
             $em->persist($Submenus);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('mensaje', 'SubMenu creado');
+            $this->get('session')->getFlashBag()->add('mensaje', 'SubMenu creado exitosamente !!!');
+            return $this->redirect($this->generateUrl('ConsultaSubMenus'));
+        } else {
+            $this->get('session')->getFlashBag()->add('mensaje', 'Debes logearte primero');
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+     public function GuardarEditarSubMenuAction(Request $request,$idSubMenu) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            // Entity Manager
+            $em=  $this->getDoctrine()->getManager();
+               $Submenus = $em->getRepository('LoginfirstBundle:Submenus')->find($idSubMenu);
+            if (!$Submenus) {
+                throw $this->createNotFoundException(
+                        'Submenu no Encontrado ' . $idSubMenu
+                );
+            }
+            
+            //datos del form
+            $SubMenuNombre = $request->get('MeNombreSUB');
+            $MenuId= $request->get('MenuAS');
+            $Submenus->setNombre($SubMenuNombre);
+            $Submenus->setEstado('1');
+            
+            //relacion con menu
+            $menu=$em->getRepository('LoginfirstBundle:Menus')->find($MenuId);
+            $Submenus->setMenus($menu);       
+            $em->persist($Submenus);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('MensajeUpdate', 'SubMenu actualizado exitosamente !!!');
             return $this->redirect($this->generateUrl('ConsultaSubMenus'));
         } else {
             $this->get('session')->getFlashBag()->add('mensaje', 'Debes logearte primero');
@@ -1101,10 +1287,63 @@ class AdminController extends Controller {
 
         return $response;
     }
+    // consulta de tiempos desde administrador
     
+   public function ConsultaTiemposAction(Request $request){
+       $session = $request->getSession();   
+        if ($session->has("id")) {        
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery
+                    (
+                    'SELECT d.fecha Fecha, d.tiempo Tiempo, d.actividad Descripcion, c.nombre ClienteNombre
+                     FROM LoginfirstBundle:Clientes c 
+                    JOIN LoginfirstBundle:Detallehojas d WITH c.id = d.clientes 
+                    '
+            );
+            $Hojas=$query->getResult();
+             $Clientes = $em->getRepository('LoginfirstBundle:Clientes')->findAll();
+             $Empleados = $em->getRepository('LoginfirstBundle:Empleados')->findAll();
+                     
+            return $this->render('LoginfirstBundle:Admin:ConsultaTiempos.html.twig',  array('HojasT' => $Hojas,'Clientes'=>  $Clientes,'Empleados'=>$Empleados));
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }       
+    }
     
- 
-      public function getTotalReq(){
+    public function ConsultaTiemposCAction(Request $request, $idCliente) {
+        $session = $request->getSession();
+      
+        $cliente =$idCliente;
+          $em = $this->getDoctrine()->getManager();
+        if ($cliente == 0){
+            $query = $em->createQuery
+                    (
+                    'SELECT d.fecha Fecha, d.tiempo , d.actividad Descripcion, c.nombre ClienteNombre
+                     FROM LoginfirstBundle:Clientes c 
+                    JOIN LoginfirstBundle:Detallehojas d WITH c.id = d.clientes 
+                    '
+            );
+        }else{
+            $query = $em->createQuery
+                        (
+                        'SELECT d.fecha Fecha, d.tiempo , d.actividad Descripcion, c.nombre ClienteNombre                  
+                    FROM LoginfirstBundle:Clientes c 
+                    JOIN LoginfirstBundle:Detallehojas d WITH c.id = d.clientes 
+                    where c.id=:Cliente                                     
+                   '
+                )->setParameters(array('Cliente' => $cliente));
+        }
+        
+        $Tiempos = $query->getArrayResult();
+        $response = new Response(json_encode($Tiempos));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    public function getTotalReq(){
        
             $Req = $this->getDoctrine()->getManager()->createQuery(
                     'SELECT count(r)

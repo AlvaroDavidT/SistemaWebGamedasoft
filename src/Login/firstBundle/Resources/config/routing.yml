@@ -44,14 +44,14 @@ Logout:
 Cliente:
     path: /Cliente
     defaults: { _controller: LoginfirstBundle:Cliente:Cliente}
-    #-------------Actualiza Datos----------------------------
+    #-------------Actualiza Datos Cliente----------------------------
 UpdateCliente:
     path: /UpdateCliente/
     defaults: { _controller: LoginfirstBundle:Cliente:updateCliente}
 GuardarUpdate:
     path: /UpdateCliente/{Cliente}
     defaults: { _controller: LoginfirstBundle:Cliente:GuardarCliente}
-    #----actualiza clave clientes---#
+    #----Atualiza Clave Clientes-----------------------------------
 CambiarClaveCliente:
     path: /CambiarCClave/
     defaults: { _controller: LoginfirstBundle:Cliente:CambiarClave}     
@@ -76,7 +76,59 @@ SubMenus1:
 GuardarReqCliente:
     path: /GuardarRq/
     defaults: { _controller: LoginfirstBundle:Cliente:GuardarRqCliente}
+    #-----------Actualiza requererimiento-------------------------
+ActualizaReq1:
+    path: /ActualizaReq
+    defaults: { _controller: LoginfirstBundle:Cliente:ActualizaRequerimiento}
+ActualizaReq:
+    path: /ActualizaReq/{idRq}
+    defaults: { _controller: LoginfirstBundle:Cliente:ActualizaRequerimiento}
+    
+    #-------------Eliminar requerimiento------------------------
+EliminaReq1:
+    path: /EliminarReq
+    defaults: { _controller: LoginfirstBundle:Cliente:EliminarRequerimiento}
+EliminaReq:
+    path: /EliminarReq/{idRq}
+    defaults: { _controller: LoginfirstBundle:Cliente:EliminarRequerimiento}
+    
+    #-----------Consulta requerimientos clientes====================
+    #=====consulta desde Ingreso requerimiento==============================   
+RequerimientosClientes:
+    path: /ConsultaReqC/
+    defaults: { _controller: LoginfirstBundle:Cliente:ConsultaReq}
 
+RequerimientosModulosClientes:
+    path: /ConsultaReqC/Modulo/{IdModulo}
+    defaults: { _controller: LoginfirstBundle:Cliente:ConsultaModuloClientes}
+        
+    #========consulta desde consultas requerimientos===============
+RequerimientosC:
+    path: /RequerimientosC
+    defaults: { _controller: LoginfirstBundle:Cliente:RequerimientosC}
+
+RequerimientosCFechaInicial:
+    path: /RequerimientosC/FechaInicialC
+    defaults: { _controller: LoginfirstBundle:Cliente:RequerimientosFechaInicialC}
+
+RequerimientosCEntreFechas:
+    path: /RequerimientosC/FechaEntreFechasC
+    defaults: { _controller: LoginfirstBundle:Cliente:RequerimientosEntreFechasC}
+    
+RequerimientosCEstados:
+    path: /RequerimientosC/Estados
+    defaults: { _controller: LoginfirstBundle:Cliente:RequerimientosEntreFechasC}
+       
+RequerimientosEstadosC:
+    path: /RequerimientosC/Estados/{IdEstado}
+    defaults: { _controller: LoginfirstBundle:Cliente:ConsultaEstadosC}
+    
+RequerimientosModulos:
+    path: /RequerimientosC/Modulos/{IdModulo}
+    defaults: { _controller: LoginfirstBundle:Cliente:ConsultaModulosC}    
+    
+      
+    
   #----------------------routing empleados-----------------------------------  
 Empleado:
     path: /Empleado
@@ -95,27 +147,31 @@ GuardarHojasT:
 GuardarTiempoRq:
     path: /GuardarTiempo/Hojas/
     defaults: { _controller: LoginfirstBundle:Empleado:GuardarRegistroT} 
+    
+    
 UpdateEmpleado:
     path: /UpdateEmpleado/
     defaults: { _controller: LoginfirstBundle:Empleado:updateEmpleado}
     
-GuardarUpdate:
-    path: /UpdateCliente/{Empleado}
+GuardarUpdateE:
+    path: /UpdateEmpleado/{Empleado}
     defaults: { _controller: LoginfirstBundle:Empleado:GuardarEmpleado}
+   
+    
     #----actualiza clave Empleado---#
 CambiarClaveEmpleado:
     path: /CambiarEClave/
     defaults: { _controller: LoginfirstBundle:Empleado:CambiarClave}     
-PruebaClave:
+PruebaClaveE:
     path: /CambiarEClave/{Empleado}
     defaults: { _controller: LoginfirstBundle:Empleado:PruebaClaveEmpleado}   
-GuardaClave:
+GuardaClaveE:
     path: /CambiarEClave/Guardar/{Empleado}
     defaults: {_controller: LoginfirstBundle:Empleado:GuardarClaveEmpleado}  
     
 GuardarHojaT:
     path: /RegistroRq/
-    defaults: {_controller: LoginfirstBundle:Empleado:GuardarRequerimiento}  
+    defaults: {_controller: LoginfirstBundle:Empleado:GuardarReqTiempo}
     
     
 Perfil:
@@ -158,26 +214,37 @@ ActualizaClaveAdmin:
 PruebaClaveAdmin:
     path: /ActualizaClave/{idAdmin}
     defaults: {_controller: LoginfirstBundle:Admin:PruebaClave}
-GuardaClave:
-    path: /ActualizaClave/Guardar/{idAdmin}
+GuardaClaveA:
+    path: /ActualizaClave/GuardarA/{idAdmin}
     defaults: {_controller: LoginfirstBundle:Admin:GuardarClaveAdmin}
-#EMPLEADOS
+#==========consulta de empleados desde administrador
 ConsultaEmpleados:
     path: /Empleados
     defaults: { _controller: LoginfirstBundle:Admin:ListarEmpleados}
 GuardarEmpleado:
     path: /GuardarEmpleado
     defaults: { _controller: LoginfirstBundle:Admin:GuardarNuevoEmpleado}
-VerEmpleado:
-    path: /Empleado/ver/{idE}
-    defaults: { _controller: LoginfirstBundle:Admin:VerEmpleado}
-EditarEmpleado:
-    path: /Empleado/Editar/{idE}
-    defaults: { _controller: LoginfirstBundle:Admin:EditarEmpleados}
+GuardarEditEmpleado1:
+    path: /Guardar/Editar
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditEmpleado}
+
 GuardarEditEmpleado:
     path: /Guardar/Editar/{idEU}
     defaults: { _controller: LoginfirstBundle:Admin:GuardarEditEmpleado}
-        
+    
+BuscaPorCedula:    
+    path: /Cedula/
+    defaults: { _controller: LoginfirstBundle:Admin:BuscaCedula}
+BuscaPorCedula1:    
+    path: /Cedula/{idCedula}
+    defaults: { _controller: LoginfirstBundle:Admin:BuscaCedula}
+
+
+
+EliminarEmpleado1:
+    path: /Empleado/Eliminar
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarEmpleados}
+
 EliminarEmpleado:
     path: /Empleado/Eliminar/{idED}
     defaults: { _controller: LoginfirstBundle:Admin:EliminarEmpleados}
@@ -189,17 +256,25 @@ GuardarCliente:
     path: /GuardarCliente
     defaults: { _controller: LoginfirstBundle:Admin:GuardarNuevoCliente}
     
-VerCliente:
-    path: /Cliente/ver/{idC}
-    defaults: { _controller: LoginfirstBundle:Admin:VerClientes}
+BuscaPorRuc:    
+    path: /Ruc/
+    defaults: { _controller: LoginfirstBundle:Admin:BuscaRuc}
     
-EditarCliente:
-    path: /Cliente/Editar/{idC}
-    defaults: { _controller: LoginfirstBundle:Admin:EditarCliente}
+BuscaPorRuc1:    
+    path: /Ruc/{idRuc}
+    defaults: { _controller: LoginfirstBundle:Admin:BuscaRuc}
+    
+GuardarEditCliente1:
+    path: /Guardar/EditarC
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarCliente}
     
 GuardarEditCliente:
     path: /Guardar/EditarC/{idCU}
     defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarCliente}
+ 
+EliminarCliente1:
+    path: /Cliente/Eliminar
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarCliente}   
     
 EliminarCliente:
     path: /Cliente/Eliminar/{idCD}
@@ -210,20 +285,57 @@ ConsultaModulos:
     defaults: { _controller: LoginfirstBundle:Admin:ListarModulos}
 GuardarModulo:
     path: /GuardarModulo
-    defaults: { _controller: LoginfirstBundle:Admin:GuardarNuevoModulo}   
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarNuevoModulo}  
+    
+GuardarEditModuloA1:
+    path: /Guardar/EditarModulo
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarCliente}
+    
+GuardarEditMenusA:
+    path: /Guardar/Editarmenu/{idMenu}
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarMenu}  
+
+GuardarEditMenusA1:
+    path: /Guardar/EditarModulo
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarModulo}
+    
+GuardarEditModuloA:
+    path: /Guardar/EditarModulo/{idModulo}
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarModulo}
+    
 ActivaMod:
     path: /Modulo/Activa/{idMod}
     defaults: { _controller: LoginfirstBundle:Admin:ActivaModulo}
+    
 DesactivaMod:
     path: /Modulo/Desactiva/{idMod}
     defaults: { _controller: LoginfirstBundle:Admin:DesactivaModulo}
+    
+EliminarModulo:
+    path: /Modulo/Eliminar/{idEM}
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarModulo}    
+    
 #MENUS
 ConsultaMenus:
     path: /Menus
     defaults: { _controller: LoginfirstBundle:Admin:ListarMenus}
+    
+EliminarMenu:
+    path: /Menu/Eliminar/{idEMe}
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarMenu} 
+    
+EliminarSubmenus1:
+    path: /Submenu/Eliminar
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarSubmenus}   
+    
+EliminarSubmenus:
+    path: /Submenu/Eliminar/{idSm}
+    defaults: { _controller: LoginfirstBundle:Admin:EliminarSubmenus} 
+    
 ActivaMenu:
     path: /Menu/Activa/{idMenu}
     defaults: { _controller: LoginfirstBundle:Admin:ActivaMenu}
+    
 DesactivaMenu:
     path: /Menu/Desactiva/{idMenu}
     defaults: { _controller: LoginfirstBundle:Admin:DesactivaMenu}
@@ -251,7 +363,14 @@ DesactivaSubMenu:
 GuardarSubMenu:
     path: /GuardarSubMenu
     defaults: { _controller: LoginfirstBundle:Admin:GuardarNuevoSubMenu}    
+
+GuardarEditSubMenusA1:
+    path: /Guardar/EditarSubMenu
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarSubMenu}
     
+GuardarEditSubMenusA:
+    path: /Guardar/EditarSubMenu/{idSubMenu}
+    defaults: { _controller: LoginfirstBundle:Admin:GuardarEditarSubMenu}
 #ASIGNACION REQUERIMIENTOS    
 ConsultarRequerimientos:
     path: /Requerimientos
@@ -260,11 +379,32 @@ ConsultarRequerimientos:
 GuardarAsignacion:
     path: /Asignar/{idRq}
     defaults: { _controller: LoginfirstBundle:Admin:Asignar}
-#CONSULTAS ADMINISTRADOR
+#CONSULTAS ADMINISTRADOR =====con ajax
 Requerimientos:
     path: /ConsultaReq/
     defaults: { _controller: LoginfirstBundle:Admin:ConsultaReq}
 
+ConsultaTiempos:
+    path: /C_Tiempos/
+    defaults: { _controller: LoginfirstBundle:Admin:ConsultaTiempos}
+
+ConsultaTiempos1:
+    path: /C_Tiempos/Cliente/{idCliente}
+    defaults: { _controller: LoginfirstBundle:Admin:ConsultaTiemposC}
+    
+ConsultaEmpleados:
+    path: /C_Empleados/
+    defaults: { _controller: LoginfirstBundle:Admin:ConsultaEmpleados}
+
+ConsultaClientes:
+    path: /C_Clientes/
+    defaults: { _controller: LoginfirstBundle:Admin:ConsultaClientes}
+
+ConsultaModulos:
+    path: /C_Modulos/
+    defaults: { _controller: LoginfirstBundle:Admin:ConsultaModulos}
+
+    
 RequerimientosFechaI:
     path: /ConsultaReq/FechaInicial
     defaults: { _controller: LoginfirstBundle:Admin:ConsultaReqFechaInicial}
@@ -287,3 +427,20 @@ RequerimientosModulo:
 RequerimientosEmpleado:
     path: /ConsultaReq/Empleado/{IdEmpleado}
     defaults: { _controller: LoginfirstBundle:Admin:ConsultaEmpleado}
+    
+    
+#consulta de empleados
+ConsulReqEmp:
+    path: /ConsultaReqE
+    defaults: { _controller: LoginfirstBundle:Empleado:ConsultaReqE}
+    
+ConsulReqTiempos:
+    path: /ConsulReqTiempos
+    defaults: { _controller: LoginfirstBundle:Empleado:ConsulReqTiempos}
+
+
+#busc de submenus
+BuscaSubmenu:
+    path: /Submenu/Busca/{idSub}
+    defaults: { _controller: LoginfirstBundle:Admin:BuscaSubmenu}
+    

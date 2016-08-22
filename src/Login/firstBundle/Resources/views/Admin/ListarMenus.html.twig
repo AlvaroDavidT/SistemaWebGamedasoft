@@ -4,7 +4,7 @@
     <section>
         <ol class="breadcrumb">
             <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
-            <li class="active">Lista Menus</li>
+            <li class="active">Lista de Menus</li>
         </ol>
     </section>
 {%endblock%}
@@ -12,27 +12,39 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
+               {% for flashMessage in app.session.flashbag.get('MensajeUpdate')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
                 {% for flashMessage in app.session.flashbag.get('mensaje')%}
-                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('MensajeError')%}
+                    <div class="alert alert-danger"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                  
+                {% endfor%}
+                 {% for flashMessage in app.session.flashbag.get('MensajeExitoso')%}
+                     <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
                 {% endfor%}
                 <!-- Trigger the modal with a button -->
 
                 <!-- Modal -->
                 <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-sm">
 
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header btn-primary ">
                                 <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
-                                <h5 class="modal-title">Nuevo Menu</h5>
+                                <h5 class="modal-title" align="center"><strong>INGRESO NUEVO MENU</strong></h5>
                             </div>
                             <form id="NuevoMenu" method="Post" class="form-horizontal" action='{{ path('GuardarMenu') }}'>
 
                                 <div class="modal-body">                               
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="MenuNombre">Nombre:</label>
-                                        <div class="input-group col-sm-5">
+                                        <div class="input-group col-sm-8">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-pencil"></i>
                                             </div>
@@ -41,12 +53,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="Modulo">Modulo:</label>
-                                        <div class="input-group col-sm-6">
+                                        <div class="input-group col-sm-8">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-bars"></i>
                                             </div>
                                             <select class="form-control input-sm" name='Modulo' id='Modulo'>
-                                                 <option value=''selected>Seleccione Modulo</option>
+                                                <option value=''selected>Seleccione Modulo</option>
                                                 {% for Modulos in Modulos %}                                                
                                                     <option value='{{Modulos.idModulo }}' name='{{Modulos.NombreModulo }}'>{{Modulos.NombreModulo }}</option>
                                                 {% endfor %}
@@ -55,8 +67,8 @@
                                     </div> 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                    <button type="submit" class="btn btn-success btn-xs" id="btn-envia"><span class="fa fa-check-circle"></span> Guardar</button>
                                 </div>
                             </form>
                         </div>
@@ -66,40 +78,105 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class='row'>
-                            <div class='col-xs-6 '>Lista de Menus</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                            <div class='col-xs-6 '><strong>Lista de Menus</strong></div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
                         </div>
                         <hr>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="example2" class="table table-hover table-condensed">
+                              <div class="col-md-12">
+                                <p class="text-info">
+                                    <br>
+                                    <small><strong> TOTAL DE REGISTROS: <span class="badge">{{Menus|length}}</span></strong></small>
+                                    <br></p>                         
+
+
+
+                            </div>
+                            <table id="example2" class="table table-hover table-bordered">
                                 <thead class='bg-success'>
                                     <tr> 
-                                        <th>#</th>
-                                        <th>Menus</th>
-                                        <th>Módulo</th>
-                                        <th class='text-center'>Estado</th>
+                                        <th class="text-center small">N°</th>
+                                        <th class="text-center small">MENUS</th>
+                                        <th class="text-center small">MODULOS</th>
+                                        <th class="text-center small">ACTIVAR/DESACTIVAR</th>
+                                        <th class="text-center small col-xs-2">ACCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for Menus in Menus %}
                                         <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ Menus.NombreMenu }}</td>
-                                            <td>{{ Menus.Modulo }}</td>
-                                            <td class='text-center'> {% if Menus.EstadoMenu == 1%}
-                                                <a href="{{path('DesactivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-success'>Activado</a>
-                                            {% else %}
-                                                <a href="{{path('ActivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-danger'>Desactivado</a>
-                                                {% endif %}</td>                    
-                                            </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- /.box -->
+                                            <td class="text-center small">{{ loop.index }}</td>
+                                            <td class="text-center small">{{ Menus.NombreMenu }}</td>
+                                            <td class="text-center small">{{ Menus.Modulo }}</td>
+                                            <td class="text-center small"> 
+                                                {% if Menus.EstadoMenu == 1%}
+                                                    <a href="{{path('DesactivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-success'>Activado</a>
+                                                {% else %}
+                                                    <a href="{{path('ActivaMenu',{'idMenu': Menus.idMenu })}}" class='btn btn-xs btn-danger'>Desactivado</a>
+                                                {% endif %}                 
+
+                                            </td>
+                                            <td>
+                                                <!-- inicia el modal de edicion-->
+                                                <button type="button" id="actualizar" class="btn btn-xs btn-success btn-circle" data-toggle="modal" data-target="#{{Menus.idMenu }}" data-whatever="@mdo"> <i class="fa fa-pencil" title="EDITAR" aria-hidden="true"></i></button><small>Editar</small> 
+                                                <div class="modal" id="{{ Menus.idMenu }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <form id="Editar" method="POST" action='{{ path('GuardarEditMenusA',{'idMenu':  Menus.idMenu }) }}'>                          
+                                                            <div class="modal-content">
+                                                                <div class="modal-header btn-primary">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                                                    <h5 class="modal-title" id="exampleModalLabel" align="center"><strong> ACTUALIZAR MODULO</strong></h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class='row'>
+
+                                                                        <div class='col-sm-12'>                                                                          
+                                                                            <strong>Nombre:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                    <input type="text" value="{{Menus.NombreMenu }}" id="MeNombre" name="MeNombre" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                    
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Modulo:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+
+                                                                                    <select class="form-control input-sm" name='MenuD' id='MenuD'>
+                                                                                        <option value='{{Menus.ModuloId}}'selected>{{Menus.Modulo}}</option>
+                                                                                        {% for Modulos in Modulos %}                                                
+                                                                                            <option value='{{Modulos.idModulo }}' name='{{Modulos.NombreModulo }}'>{{Modulos.NombreModulo }}</option>
+                                                                                        {% endfor %}
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>                                                    
+                                                                </div>
+                                                                <div class="modal-footer bg-gray">
+                                                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                                                    <button type="submit" id="actualizar" class="btn btn-success btn-xs"><span class="fa fa-check-circle"></span> Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>                            
+                                                    </div>
+                                                </div>
+                                              <!-- FIN EDITAR EMPLEADOS --> 
+                                                       <a class="btn btn-danger btn-circle" href="{{path('EliminarMenu',{'idEMe': Menus.idMenu })}}"><i class="fa fa-trash-o fa-fw" title="ELIMINAR" aria-hidden="true"></i> <span class="sr-only">ELIMINAR</span></a><small>Eliminar</small>
+                                
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </section><!-- /.content -->
-                {% endblock %}
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </section><!-- /.content -->
+{% endblock %}

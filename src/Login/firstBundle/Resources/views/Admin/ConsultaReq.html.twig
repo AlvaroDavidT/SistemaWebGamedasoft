@@ -4,7 +4,7 @@
     <section>
         <ol class="breadcrumb">
             <li><a href="{{path('Admin')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
-            <li class="active">Requerimientos</li>
+            <li class="active">Consulta Requerimientos</li>
         </ol>
     </section>
 {%endblock%}
@@ -45,7 +45,7 @@ doc.text(150, 30, 'GAMEDASOFT SISTEMAS INFORMATICOS');
 doc.text(150, 40, '_______________________________________');
 doc.setFontSize(11);
 doc.text(20, 60, 'Reporte de requerimientos');
-doc.setFontSize(10);
+doc.setFontSize(8);
 
 $.each(table, function(i, row){
 	$.each(row, function(j,cell){
@@ -130,13 +130,14 @@ doc.save('RequerimientosClientes.pdf');
                             </ul>
                         </div>
                     </div>
+                    <div class="panel-footer"></div>
                 </div>
             </div>
             <div class="col-md-9">               
                 <div id="Pdf" class="panel panel-primary">
                     <div class="panel-heading">
                         <div class='row'>
-                            <div class='col-xs-6 '><i class="fa fa-bars" aria-hidden="true"></i> <strong>Requerimientos</strong></div>
+                            <div class='col-xs-6 '><i class="fa fa-bars" aria-hidden="true"></i> <strong> Requerimientos</strong></div>
                             <div class='col-xs-6 text-right'>
                                 <button id="GuardarT" onclick="javascript:callme()" class="btn btn-success"><i class="fa fa-download fa-lg" aria-hidden="true"></i> PDF</button>
                               </div>
@@ -144,28 +145,28 @@ doc.save('RequerimientosClientes.pdf');
                     </div>     
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="pdf" class="table table-striped">
+                            <table id="pdf" class="table table-bordered">
                                 <thead class='bg-success'>
                                     <tr> 
-                                        <th>#</th>
-                                        <th>Fecha</th>
-                                        <th>Id</th>
-                                        <th>Cliente</th>
-                                        <th>Estado</th>
-                                        <th>Módulo</th>
-                                        <th>Empleado Asignado</th>                                        
+                                        <th class="text-center small">Nº</th>
+                                        <th class="text-center small">FECHA</th>
+                                        <th class="text-center small">ID</th>
+                                        <th class="text-center small">CLIENTE</th>
+                                        <th class="text-center small">ESTADO</th>
+                                        <th class="text-center small">MODULO</th>
+                                        <th class="text-center small">EMPLEADO ASIGNDO</th>                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for RequeP in Requerimientos %}
                                         <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ RequeP.RqFecha|date("m/d/Y", false)}}</td>   
-                                            <td>Rq-{{ RequeP.RqId }}</td>
-                                            <td>{{ RequeP.Cliente }}</td>
-                                            <td>{{ RequeP.Estado }}</td>
-                                            <td>{{ RequeP.Modulo }}</td>
-                                            <td>{{ RequeP.AsignadoNombre }} {{ RequeP.AsignadoApellido }}</td>     
+                                            <td class="text-center small">{{ loop.index }}</td>
+                                            <td class="text-center small">{{ RequeP.RqFecha|date("m/d/Y", false)}}</td>   
+                                            <td class="text-center small">Rq-{{ RequeP.RqId }}</td>
+                                            <td class="text-center small">{{ RequeP.Cliente }}</td>
+                                            <td class="text-center small">{{ RequeP.Estado }}</td>
+                                            <td class="text-center small">{{ RequeP.Modulo }}</td>
+                                            <td class="text-center small">{{ RequeP.AsignadoNombre }} {{ RequeP.AsignadoApellido }}</td>     
                                         </tr>
                                     {% endfor %}
                                 </tbody>

@@ -151,7 +151,7 @@ class ClienteController extends Controller {
         if ($session->has("id")) {
             $idCliente = $session->get('id');
             $em = $this->getDoctrine()->getManager();
-            $dql = "SELECT r.fecha Fecha,r.id IdReq,d.nombre Modulo,e.nombre Estado,m.nombre Menu,s.nombre SubMenu
+            $dql = "SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado,m.nombre Menu, m.id IdMenus,s.nombre SubMenu, s.id idSubmenu
                     FROM LoginfirstBundle:Clientes c               
                     JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
                     JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
@@ -160,12 +160,13 @@ class ClienteController extends Controller {
                     JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
                     where e.id= 1 and c.id=:Cliente
                     order by r.fecha desc";
+            
             $Requerimientos = $em->createQuery($dql);
             $Requerimientos ->setParameter('Cliente', $idCliente);                   
             $paginator = $this->get("Knp_Paginator");
             $pagination = $paginator->paginate(
                     $Requerimientos, $request->query->getInt("page", 1),
-                    2
+                   7
                     );        
             $dqlModulos="SELECT m From LoginfirstBundle:Modulos m where m.estado=1";
             $ModulosA=$em->createQuery($dqlModulos);
@@ -179,6 +180,58 @@ class ClienteController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
+    
+#=================================Actualiza requerimientos==============================
+    public function ActualizaRequerimientoAction($idRq,Request $request) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            $em = $this->getDoctrine()->getManager();
+            $Requerimiento = $em->getRepository('LoginfirstBundle:Requerimientos')->find($idRq);
+           if (!$Requerimiento) {
+                throw $this->createNotFoundException(
+                        'Requerimiento no Encontrado ' . $idRq);
+            }  else {
+            $SubMenu1= $request->get('SubMenu1');
+            $Descripcion=$request->get('txtArea1');
+            $Submenu=$em->getRepository('LoginfirstBundle:Submenus')->find($SubMenu1);
+            $Requerimiento->setSubmenus($Submenu);     
+            $Requerimiento->setDescripcion($Descripcion);
+            $em->persist($Requerimiento);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('mensaje', 'Requerimiento Actualizado');
+            return $this->redirect($this->generateUrl('NuevoReq'));           
+            } 
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+#===========================Eliminar Requerimiento====================
+ public function EliminarRequerimientoAction($idRq,Request $request) {
+        $session = $request->getSession();
+        if ($session->has("id")) {
+            $em = $this->getDoctrine()->getManager();
+            $Requerimiento = $em->getRepository('LoginfirstBundle:Requerimientos')->find($idRq);
+           if (!$Requerimiento) {
+                throw $this->createNotFoundException(
+                        'Requerimiento no Encontrado ' . $idRq);
+            }  else {
+            
+            $em->remove($Requerimiento);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('mensaje', 'Eliminado');
+            return $this->redirect($this->generateUrl('NuevoReq'));           
+            } 
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje', 'Debes Iniciar Sesion'
+            );
+            return $this->redirect($this->generateUrl('Login'));
+        }
+    }
+
 #==================================Consulta de submenus ajax=========================
       public function SubMenuAjaxAction($idMenu) {
 
@@ -197,7 +250,47 @@ class ClienteController extends Controller {
         return $response;
    
     }
-  #====================================Guardar requerimiento=========================
+    
+ #=================================Consulta modulos new rq para ajax tablas================
+         public function ConsultaModuloClientesAction(Request $request, $IdModulo) {
+             $session = $request->getSession();
+        $idCliente = $session->get('id');
+        $Modulo = $IdModulo;
+        $em = $this->getDoctrine()->getManager();
+            if ($Modulo == 0) {
+                  $query = $em->createQuery('SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado,m.nombre Menu, m.id IdMenus,s.nombre SubMenu, s.id idSubmenu
+                        FROM LoginfirstBundle:Clientes c               
+                        JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                        JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                        JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                        JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                        JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                        where e.id= 1 and c.id=:Cliente 
+                        order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente));
+              
+         } else {          
+                
+              $query = $em->createQuery(
+                       'SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado,m.nombre Menu, m.id IdMenus,s.nombre SubMenu, s.id idSubmenu
+                        FROM LoginfirstBundle:Clientes c               
+                        JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                        JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                        JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                        JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                        JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                        where e.id= 1 and c.id=:Cliente and d.id=:Modulo
+                        order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente,'Modulo'=>$Modulo));
+            }
+            $Requerimientos = $query->getArrayResult();
+            $response = new Response(json_encode($Requerimientos));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+       
+    }
+
+#====================================Guardar requerimiento=========================
      public function GuardarRqClienteAction(Request $request) {
         $session = $request->getSession();
         if ($session->has("id")) {        
@@ -227,23 +320,32 @@ class ClienteController extends Controller {
         return $this->redirect($this->generateUrl('Login'));
     } 
   #=======================================Consulta Requerimientos============================   
-      public function ConsultaRqAction(Request $request) {
+      public function RequerimientosCAction(Request $request) {
         $session = $request->getSession();
         if ($session->has("id")) {
             $idCliente = $session->get('id');
             $em = $this->getDoctrine()->getManager();
-            $dql = "SELECT r FROM LoginfirstBundle:Requerimientos r
-                    where r.clientes= :Cliente";
+            $dql = "SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente
+                    order by r.fecha desc";
             $Requerimientos = $em->createQuery($dql);
             $Requerimientos ->setParameter('Cliente', $idCliente);                   
             $paginator = $this->get("Knp_Paginator");
             $pagination = $paginator->paginate(
                     $Requerimientos, $request->query->getInt("page", 1),
-                    5
+                    10
                     );        
-          
+           
+            $Modulos=$em->getRepository('LoginfirstBundle:Modulos')->findAll();
+           $Estados = $em->getRepository('LoginfirstBundle:Estados')->findAll();
                        
-            return $this->render('LoginfirstBundle:Clientes:Consultas.html.twig',  array('pagination' => $pagination));
+            return $this->render('LoginfirstBundle:Clientes:Consultas.html.twig',  array('pagination' => $pagination,'Modulos' => $Modulos,'Estados' => $Estados));
         } else {
             $this->get('session')->getFlashBag()->add(
                     'mensaje', 'Debes Iniciar Sesion'
@@ -251,10 +353,163 @@ class ClienteController extends Controller {
             return $this->redirect($this->generateUrl('Login'));
         }
     }
-    public function estadosAction(){
-        $em=  $this->getDoctrine()->getManager();
-      //  estados=$em
-        
+    #=======================================Consulta Requerimientos fecha Inicial============================   
+      public function RequerimientosFechaInicialCAction(Request $request) {
+        $session = $request->getSession();
+       
+            $idCliente = $session->get('id');
+            $fechaInicialC=$request->get("fechaInicialC");
+            $fechaInicialFormatC=(new \DateTime($fechaInicialC));
+            $em = $this->getDoctrine()->getManager();
+            $query=$em->createQuery('SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and r.fecha>=:FechaIC
+                    order by r.fecha desc')->setParameters(array('Cliente'=>$idCliente,'FechaIC'=>$fechaInicialFormatC));                   
+            $RequerimientosClientes=$query->getArrayResult();
+            $response=new Response(json_encode($RequerimientosClientes));
+            $response->headers->set('Content-Type','application/json');
+            return $response;
+                        
+    }
+        #=======================================Consulta Requerimientos entre fechas============================   
+      public function RequerimientosEntreFechasCAction(Request $request) {
+        $session = $request->getSession();
+       
+            $idCliente = $session->get('id');
+            $fechaInicialC=$request->get("fechaInicialC");
+            $fechaFinalC=$request->get('fechaFinalC');
+            $fechaInicialFormatC=(new \DateTime($fechaInicialC));
+            $fechaFinalFormatC=(new \DateTime($fechaFinalC));
+            $em = $this->getDoctrine()->getManager();
+            $query=$em->createQuery('SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and r.fecha>=:FechaIC and r.fecha<=:FechaFC
+                    order by r.fecha desc')->setParameters(array('Cliente'=>$idCliente,'FechaIC'=>$fechaInicialFormatC,'FechaFC'=>$fechaFinalFormatC));                   
+            $RequerimientosClientes=$query->getArrayResult();
+            $response=new Response(json_encode($RequerimientosClientes));
+            $response->headers->set('Content-Type','application/json');
+            return $response;
+                        
+    }
+    #====================consulta estados desde select==================
+     public function ConsultaEstadosCAction(Request $request, $IdEstado) {
+        $session = $request->getSession();
+        $idCliente = $session->get('id');
+        $fechaInicialC = $request->get("fechaInicialC");
+        $fechaFinalC = $request->get('fechaFinalC');
+        $fechaInicialFormatC = (new \DateTime($fechaInicialC));
+        $fechaFinalFormatC = (new \DateTime($fechaFinalC));
+        $Estado = $IdEstado;
+        $em = $this->getDoctrine()->getManager();
+            if ($Estado == 0 ) {
+                  $query = $em->createQuery('
+                    SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente));
+              
+         }elseif ($Estado <> 0 ) {
+             $query = $em->createQuery('
+                    SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and e.id=:Estado
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente,'Estado'=>$Estado));
+        }else{
+                 $query = $em->createQuery(
+                       'SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and e.id=:Estado and r.fecha>=:FI and r.fecha<=:FF
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente,'Estado'=>$Estado,'FI'=>$fechaInicialFormatC,'FF'=>$fechaFinalFormatC));
+            }
+            $Requerimientos = $query->getArrayResult();
+            $response = new Response(json_encode($Requerimientos));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+       
+    }
+     #====================consulta modulos desde select==================
+     public function ConsultaModulosCAction(Request $request, $IdModulo) {
+        $session = $request->getSession();
+        $idCliente = $session->get('id');
+        $fechaInicialC = $request->get("fechaInicialC");
+        $fechaFinalC = $request->get('fechaFinalC');
+        $fechaInicialFormatC = (new \DateTime($fechaInicialC));
+        $fechaFinalFormatC = (new \DateTime($fechaFinalC));
+        $Modulo = $IdModulo;
+        $em = $this->getDoctrine()->getManager();
+            if ($Modulo == 0 ) {
+                  $query = $em->createQuery('
+                    SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente));
+              
+         }else if($Modulo <> 0){
+                $query = $em->createQuery('
+                    SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and d.id=:Modulo
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente,'Modulo'=>$Modulo));
+         }
+         else
+             {
+                 $query = $em->createQuery(
+                       'SELECT r.fecha Fecha,r.id IdReq,r.descripcion Descripcion,d.nombre Modulo,e.nombre Estado
+                    FROM LoginfirstBundle:Clientes c               
+                    JOIN LoginfirstBundle:Requerimientos  r WITH c.id = r.clientes  
+                    JOIN LoginfirstBundle:Estados  e  WITH r.estados = e.id  
+                    JOIN LoginfirstBundle:Submenus  s  WITH r.submenus = s.id  
+                    JOIN LoginfirstBundle:Menus  m  WITH s.menus = m.id 
+                    JOIN LoginfirstBundle:Modulos  d  WITH m.modulos = d.id  
+                    where c.id=:Cliente and d.id=:Modulo and r.fecha>=:FI and r.fecha<=:FF
+                    order by r.fecha desc'
+                       )->setParameters(array('Cliente'=>$idCliente,'Modulo'=>$Modulo,'FI'=>$fechaInicialFormatC,'FF'=>$fechaFinalFormatC));
+            }
+            $Requerimientos = $query->getArrayResult();
+            $response = new Response(json_encode($Requerimientos));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+       
     }
    
 }

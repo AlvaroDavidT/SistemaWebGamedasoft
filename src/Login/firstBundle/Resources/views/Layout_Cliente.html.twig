@@ -10,6 +10,8 @@
     <link href="{{asset('bundles/loginfirst/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('bundles/loginfirst/css/AdminLTE.css')}}" rel="stylesheet"/>
      <link href="{{asset('bundles/loginfirst/css/Req-Tiempos.css')}}" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
+
 {% endblock %}
 {%block body %}
     <body class="skin-black">
@@ -128,7 +130,7 @@
                                                             <i class="fa fa-angle-left pull-right"></i>
                                                         </a>
                                                         <ul class="treeview-menu">
-                                                            <li><a href="ConsultaRq"><i class="fa fa-angle-double-right"></i>Requerimientos</a></li>
+                                                            <li><a href="{{path('RequerimientosC')}}"><i class="fa fa-angle-double-right"></i>Mis Requerimientos</a></li>
                                                         </ul>
                                                     </li>
                                                    
@@ -172,7 +174,8 @@
                                 <script src="{{asset('bundles/loginfirst/js/AdminLTE/app.js') }}"></script>
                                 <script src="{{asset('bundles/loginfirst/js/mainCliente.js') }}"></script>
                                 <script src="{{asset('bundles/loginfirst/js/jquery.validate.js') }}"></script>
-                            
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+       
                             {% endblock %}
                         </body>
                         {% endblock %}

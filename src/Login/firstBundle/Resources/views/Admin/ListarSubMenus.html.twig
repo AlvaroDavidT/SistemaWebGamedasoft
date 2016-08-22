@@ -12,27 +12,39 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                {% for flashMessage in app.session.flashbag.get('mensaje')%}
-                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
+                {% for flashMessage in app.session.flashbag.get('MensajeUpdate')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+
                 {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('mensaje')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+
+                {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('MensajeError')%}
+                    <div class="alert alert-danger"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+
+                {% endfor%}
+                {% for flashMessage in app.session.flashbag.get('MensajeExitoso')%}
+                    <div class="alert alert-success"><strong><center>{{ flashMessage }}!!!!</center></strong></div>
+                            {% endfor%}
                 <!-- Trigger the modal with a button -->
 
                 <!-- Modal -->
                 <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-sm">
 
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header btn-primary ">
                                 <button type="button" class="close" data-dismiss="modal"><span><i class="fa fa-times-circle"></i></span></button>
-                                <h5 class="modal-title">Nuevo SubMenu</h5>
+                                <h5 class="modal-title" align="center" >INGRESO NUEVO MENU</h5>
                             </div>
                             <form id="NuevoSubmenu" method="Post" class="form-horizontal" action='{{ path('GuardarSubMenu') }}'>
 
                                 <div class="modal-body">                               
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="SubMenuNombre">Nombre:</label>
-                                        <div class="input-group col-sm-5">
+                                        <div class="input-group col-sm-7">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-pencil"></i>
                                             </div>
@@ -41,13 +53,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="Modulo">Modulo:</label>
-                                        <div class="input-group col-sm-6">
+                                        <div class="input-group col-sm-7">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-bars"></i>
                                             </div>
-                                             <div id="PathMod" data-path="{{path('Menus1')}}"></div>  
+                                            <div id="PathMod" data-path="{{path('Menus1')}}"></div>  
                                             <select class="form-control input-sm" name='Modulo' id='Modulo'>
-                                                 <option value=''selected>Seleccione Modulo</option>
+                                                <option value=''selected>Seleccione Modulo</option>
                                                 {% for Modulos in Modulos %}                                                
                                                     <option value='{{Modulos.idModulo }}' name='{{Modulos.NombreModulo }}'>{{Modulos.NombreModulo }}</option>
                                                 {% endfor %}
@@ -60,21 +72,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="Menu">Menu:</label>
-                                        <div class="input-group col-sm-6">
+                                        <div class="input-group col-sm-7">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-bars"></i>
                                             </div>
                                             <select class="form-control input-sm" name='Menu' id='Menu'>
                                                 <option value=''selected>Seleccione Menu</option>
                                             </select>
-                                             
+
 
                                         </div>  
                                     </div> 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary" id="btn-envia">Guardar</button>
+                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                    <button type="submit" class="btn btn-success btn-xs" id="btn-envia"><span class="fa fa-check-circle"></span> Guardar</button>
                                 </div>
                             </form>
                         </div>
@@ -84,42 +96,160 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class='row'>
-                            <div class='col-xs-6 '>Lista de SubMenus</div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
+                            <div class='col-xs-6 '><strong>Lista de SubMenus</strong></div><div class='col-xs-6 text-right'><button type="button" class="btn btn-success btn-sm text-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle"></i> Nuevo</button></div>
                         </div>
                         <hr>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="example2" class="table table-hover table-condensed">
+                            <div class="col-md-12">
+                                <p class="text-info">
+                                    <br>
+                                    <small><strong>TOTAL DE REGISTROS: <span class='badge'>{{SubMenus|length}}</span></strong></small>
+                                    <br></p>                         
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel panel-danger col-md-12">
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <strong>Buscar Submenu: <i class="fa fa-search" aria-hidden="true"></i></strong>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group col-sm-3">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-qrcode"></i>
+                                                </div>
+                                                <select class="form-control input-sm" name='SubmenusBuscar' id='Modulo'>
+                                                    <option value='0'selected>Todos</option>
+                                                    {% for SubmenusB in SubmenusB %}                                                
+                                                        <option value='{{SubmenusB.id }}' name='{{SubmenusB.Nombre }}'> 
+                                                        <a href="{{path('BuscaSubmenu',{'idSub': SubmenusB.id })}}" class='btn btn-xs btn-success '>{{SubmenusB.Nombre }}</a>
+
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 text-center"><div class="loading1"></div>
+                                </div>
+                            </div>     
+
+
+
+
+                            <table id="Submenus" class="table table-hover table-bordered">
                                 <thead class='bg-success'>
                                     <tr> 
-                                        <th>#</th>
-                                        <th>SubMenu</th>
-                                        <th>Módulo</th>
-                                        <th>Menus</th>
-                                        <th class='text-center'>Estado</th>
+                                        <th class="text-center small">N°</th>
+                                        <th class="text-center small">SUBMENUS</th>
+                                        <th class="text-center small">MENUS</th>
+                                        <th class="text-center small">MODULO</th>
+                                        <th class="text-center small col-sm-2">ACTIVA/DESACTIVA</th>
+                                        <th class="text-center small col-sm-2">ACCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for SubMenus in SubMenus%}
                                         <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ SubMenus.NombreSubMenu }}</td>
-                                            <td>{{ SubMenus.Modulo }}</td>
-                                            <td>{{ SubMenus.Menu }}</td>
-                                            <td class='text-center'> {% if SubMenus.EstadoSubMenu == 1%}
-                                                <a href="{{path('DesactivaSubMenu',{'idSubMenu': SubMenus.idSubMenu })}}" class='btn btn-xs btn-success'>Activado</a>
-                                            {% else %}
-                                                <a href="{{path('ActivaSubMenu',{'idSubMenu': SubMenus.idSubMenu })}}" class='btn btn-xs btn-danger'>Desactivado</a>
-                                                {% endif %}</td>                    
-                                            </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- /.box -->
+                                            <td class="text-center small">{{ loop.index }}</td>
+                                            <td class="text-center small">{{ SubMenus.NombreSubMenu }}</td>
+                                            <td class="text-center small">{{ SubMenus.Menu }}</td>
+                                            <td class="text-center small">{{ SubMenus.Modulo }}</td>
+
+                                            <td class='text-center'> 
+                                                {% if SubMenus.EstadoSubMenu == 1%}
+                                                    <a href="{{path('DesactivaSubMenu',{'idSubMenu': SubMenus.idSubMenu })}}" class='btn btn-xs btn-success '>Activado</a>
+                                                {% else %}
+                                                    <a href="{{path('ActivaSubMenu',{'idSubMenu': SubMenus.idSubMenu })}}" class='btn btn-xs btn-danger btn-success '>Desactivado</a>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <!-- elimina el submenu-->
+                                                <a class="btn btn-danger btn-circle" href="{{path('EliminarSubmenus',{'idSm': SubMenus.idSubMenu })}}" ><i class="fa fa-trash-o fa-fw" title="ELIMINAR" aria-hidden="true"></i> <span class="sr-only">ELIMINAR</span></a><small>Eliminar</small>
+
+                                                <!-- inicia el modal de edicion-->
+                                                <button type="button" id="actualizar" class="btn btn-xs btn-success btn-circle" data-toggle="modal" data-target="#{{SubMenus.idSubMenu }}" data-whatever="@mdo"> <i class="fa fa-pencil" title="EDITAR" aria-hidden="true"></i></button><small>Editar</small> 
+                                                <div class="modal" id="{{ SubMenus.idSubMenu }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <form id="Editar" method="POST" action='{{ path('GuardarEditSubMenusA',{'idSubMenu':  SubMenus.idSubMenu }) }}'>                          
+                                                            <div class="modal-content">
+                                                                <div class="modal-header btn-primary">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                                                    <h5 class="modal-title" id="exampleModalLabel" align="center"><strong> ACTUALIZAR SUBMENU</strong></h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class='row'>
+
+                                                                        <div class='col-sm-12'>                                                                          
+                                                                            <strong>Nombre:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+                                                                                    <input type="text" value="{{SubMenus.NombreSubMenu }}" id="MeNombreSUB" name="MeNombreSUB" class="form-control  input-sm"/>
+                                                                                </div>
+                                                                            </div>                                                                    
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Modulo:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+
+                                                                                    <select class="form-control input-sm" name='ModuloAS' id='ModuloAS'>
+                                                                                        <option value='{{SubMenus.ModuloId}}'selected>{{SubMenus.Modulo}}</option>
+                                                                                        {% for Modulos in Modulos %}                                                
+                                                                                            <option value='{{Modulos.idModulo }}' name='{{Modulos.NombreModulo }}'>{{Modulos.NombreModulo }}</option>
+                                                                                        {% endfor %}
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12 text-center"><div class="loading"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class='col-sm-12'>
+                                                                            <strong>Submenu:</strong>
+                                                                            <div class='row'>
+                                                                                <div class='col-xs-12 col-sm-12'>
+
+                                                                                    <select class="form-control input-sm" name='MenuAS' id='MenuAS'>
+                                                                                        <option value='{{ SubMenus.idSubMenu }}'selected>{{ SubMenus.Menu }}</option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>                                                    
+                                                                </div>
+                                                                <div class="modal-footer bg-gray">
+                                                                    <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal"><span class="fa fa-times-circle-o"></span> Cancelar</button>
+                                                                    <button type="submit" id="actualizar" class="btn btn-success btn-xs"><span class="fa fa-check-circle"></span> Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>                            
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- FIN EDITAR EMPLEADOS -->   
+
+
+
+
+                                            </td>                    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </section><!-- /.content -->
-                {% endblock %}
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </section><!-- /.content -->
+{% endblock %}

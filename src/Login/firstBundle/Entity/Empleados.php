@@ -80,7 +80,7 @@ class Empleados
     /**
      * @var boolean
      *
-     * @ORM\Column(name="Genero", type="boolean", nullable=false)
+     * @ORM\Column(name="Genero", type="boolean", nullable=true)
      */
     private $genero;
 

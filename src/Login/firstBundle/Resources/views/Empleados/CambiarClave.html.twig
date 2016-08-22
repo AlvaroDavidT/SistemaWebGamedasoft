@@ -1,9 +1,9 @@
 {# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
-{% extends 'LoginfirstBundle::Layout_Cliente.html.twig' %}
+{% extends 'LoginfirstBundle::Layout_Empleado.html.twig' %}
 {%block section2 %}
     <section>
         <ol class="breadcrumb">
-            <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
+            <li><a href="{{path('Empleado')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
             <li class="active">Actualizar Clave</li>
         </ol>
     </section>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-xs-12">
                 
-                <form id="ActualizaClaveCliente"class="form-horizontal">
+                <form id="ActualizaClaveEmpleado"class="form-horizontal">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class='row'>
@@ -21,18 +21,18 @@
                         </div>
                         <hr>
                     </div>
-                    {% for cli in Clientes %}
+                    {% for Empleado in Empleados %}
                      
-                            <div id="CambiaCClave" data-path="{{path('CambiarClaveCliente')}}"></div>  
-                            <div id="idCliente" value="{{cli.id}}"></div>       
+                            <div id="CambiaEClave" data-path="{{path('CambiarClaveEmpleado')}}"></div>  
+                            <div id="idEmpleado" value="{{Empleado.id}}"></div>       
                             <div class="panel-body">
                                 <div class='row'>
                                     <div class='col-xs-3 col-sm-3 text-right'>
-                                        <strong>Nombre Empresa:</strong>
+                                        <strong>Nombre Empleado:</strong>
                                     </div>
                                     <div class='col-xs-10 col-sm-6 text-left'>
                                         <div class="text-uppercase">                                            
-                                             {{ cli.Nombre }}<br><br>
+                                             {{ Empleado.Nombre }}<br><br>
                                         </div>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                     </div>
                                     <div class='col-xs-10 col-sm-6 text-left'>
                                         <div class="text-uppercase">                                            
-                                         {{ cli.Ruc }} <br><br>
+                                         {{ Empleado.cidentidad }} <br><br>
                                         </div>
                                     </div>
                                 </div>

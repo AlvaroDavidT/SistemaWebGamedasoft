@@ -1,70 +1,174 @@
 {# src/login/firstBundle/Resources/views/Admin/IndexRT.html.twig #}
-{% extends 'LoginfirstBundle::Layout_Cliente.html.twig' %}
+{% extends 'LoginfirstBundle::Layout_ClientesConsultas.html.twig' %}
 
 {%block section2 %}
     <section>
         <ol class="breadcrumb">
             <li><a href="{{path('Cliente')}}"><i class="fa fa-dashboard"></i> INICIO</a></li>
-            <li class="active">Consulta Requerimentos</li>
+            <li class="active">Consulta Requerimientos</li>
         </ol>
     </section>
 {%endblock%}
 {%block section3 %}
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                {% for flashMessage in app.session.flashbag.get('mensaje')%}
-                    <strong class="alert-success">{{ flashMessage }} Exitosamente!!!!</strong> 
-                {% endfor%}
-                <!-- Trigger the modal with a button -->
+    <script>
 
-             
-                       
-                          
-                <div class="panel panel-primary">
+        function tableToJson(table) {
+            var data = [];
+
+// first row needs to be headers
+            var headers = [];
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                headers[i] = table.rows[0].cells[i].innerHTML.toUpperCase().replace(/ /gi, '');
+            }
+            data.push(headers);
+// go through cells
+            for (var i = 1; i < table.rows.length; i++) {
+
+                var tableRow = table.rows[i];
+                var rowData = {};
+
+                for (var j = 0; j < tableRow.cells.length; j++) {
+
+                    rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+                }
+
+                data.push(rowData);
+            }
+
+            return data;
+        }
+        function callme() {
+            var table = tableToJson($('#reporte').get(0));
+            var doc = new jsPDF('h', 'pt', 'letter', true);
+            doc.setFontSize(14);
+            doc.text(150, 30, 'GAMEDASOFT SISTEMAS INFORMATICOS');
+            doc.text(150, 40, '_______________________________________');
+            doc.setFontSize(10);
+            doc.text(20, 60, 'Reporte de requerimientos');
+            doc.setFontSize(8);
+
+            $.each(table, function (i, row) {
+                $.each(row, function (j, cell) {
+                    if (j === "N°" | j === 0) {
+                        doc.cell(20, 70, 25, 15, cell, i);
+                    } else if (j === "FECHA" | j === 1) {
+                        doc.cell(20, 80,50, 15, cell, i);
+                    } else if (j === "REQUERIMIENTO-ID" | j === 2) {
+                        doc.cell(20, 900, 80, 15, cell, i);
+                    } else if (j === "ESTADO" | j === 3) {
+                        doc.cell(20, 10, 50, 15, cell, i);
+                    } else if (j === 'MODULO' | j === 4) {
+                        doc.cell(20, 10, 100, 15, cell, i);
+                    }else if (j === 'DESCRIPCION' | j === 5) {
+                        doc.cell(20, 10, 230, 15, cell, i);
+                    }  else {
+                        doc.cell(20, 10, 80, 15, cell, i);
+                    }
+
+                });
+            });
+
+            doc.save('RequerimientosClientes.pdf');
+        }
+
+    </script>
+
+
+
+    <section class="content">
+        
+            <div class="col-md-3">
+                <div class="panel panel-primary" >
+                    <div class="panel-heading text-center"><strong><i class="fa fa-filter" aria-hidden="true"></i><small> Filtros Requerimientos</small></strong>    </div>
+                        <div id="PathRequerimientosCliente" data-path="{{path('RequerimientosC')}}"></div>
+                        <div class="panel-body fixed-panel" >
+                            <div>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong> 
+                                            Fecha Inicial:</strong><input type="text" id="fechaInicialConsultas" name="fecha" />
+                                    </li>
+                                    <li class="list-group-item"><strong> 
+                                            Fecha Final:</strong><input type="text" id="fechaFinalConsultas" name="fecha" /> 
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Estado:</strong>
+                                        <div class="form-group">
+                                            <select class="form-control input-sm" name='EstadoC' id='EstadoC'>
+                                                <option value='0'selected>Todos</option>   
+                                                 {% for Estados in Estados %}                                                
+                                                    <option value='{{Estados.id }}' name='{{Estados.Nombre }}'>{{Estados.Nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <strong>Modulo:</strong>
+                                        <div class="form-group">
+                                            <select class="form-control input-sm" name='ModuloC' id='ModuloC'>
+                                                <option value='0'selected>Todos</option>
+                                                {% for Modulos in Modulos %}                                                
+                                                    <option value='{{Modulos.id }}' name='{{Modulos.Nombre }}'>{{Modulos.Nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div> 
+                                    </li>
+                                </ul>
+                            </div>                           
+                        </div>
+                </div>            
+            </div>
+            
+            <div class="col-md-9">
+             <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class='row'>
-                            <div class='col-xs-6 '>Lista de Requerimientos</div><div class='col-xs-6 text-right'><button id="DescargarPdf" type="button" class="btn btn-success btn-sm text-right" ><i class="fa fa-print"></i> Generar Pdf</button></div>
+                            <div class='col-xs-6 '><i class="fa fa-bars" aria-hidden="true"></i><strong> Lista de Requerimientos</strong></div>
+                            <div class='col-xs-6 text-right'>
+                                <button id="DescargarPdf" onclick="javascrip:callme()" class="btn- btn-success"><i class="fa fa-files-o" aria-hidden="true"></i> Generar Pdf</button></div>
                         </div>
                         <hr>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <div class="table-responsive">
-                            <div class="navigation">
-                                <small><strong> TOTAL DE REQUERIMIENTOS: {{pagination.getTotalItemCount}}</strong></small>
-                            </div>
-                            <div id="reporte">
-                            <table id="example2" class="table table-hover table-condensed">
-                                <thead class='bg-success'>
-                                    <tr> 
-                                        <th>#</th>
-                                        <th>Fecha</th>
-                                        <th>Id-Requerimiento</th>
-                                        <th>Descripcion</th>
-                                     
-                                   </tr>
-                                </thead>
-                                <tbody>
-                                    {% for Req in pagination%}
-                                        <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ Req.Fecha |date("Y/m/d", false)}}</td>
-                                            <td>Req-{{ Req.id }}</td>
-                                            <td>{{Req.Descripcion}}</td>                    
+                           
+                            <div>
+                                <table id="reporte" class="table table-bordered">
+                                    <thead class='bg-success'>
+                                        <tr> 
+                                            <th class="text-center small">N°</th>
+                                            <th class="text-center small">FECHA</th>
+                                            <th class="text-center small">REQUEMIENTO-ID</th>
+                                             <th class="text-center small">ESTADO</th>
+                                             <th class="text-center small">MODULO</th>
+                                            <th class="text-center small">DESCRIPCION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for Req in pagination%}
+                                            <tr>
+                                                <td class="small">{{ loop.index }}</td>
+                                                <td class="small">{{ Req.Fecha | date("d/m/Y", false)}}</td>
+                                                <td class="small">Req-{{ Req.IdReq }}</td>
+                                                <td class="small" >{{ Req.Estado }}</td>
+                                                <td class="small">{{ Req.Modulo }}</td>  
+                                                <td class="small">{{Req.Descripcion}}</td>
                                             </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
-                                             <div class="navigation">
-                                               {{knp_pagination_render(pagination)}}
-                                               
-                                           </div>
-                                    </div>
-                                </div>
-                                               
-                            </div>
-                        </div><!-- /.box -->
+                           
+                        </div>
                     </div>
-                </section><!-- /.content -->
-                {% endblock %}
+
+                </div>
+                                    <div></div>
+                                      <script>
+                    $(document).ready(function () {
+                        $('#fechaInicialConsultas').datepicker();
+                        $('#fechaFinalConsultas').datepicker();
+                    });
+                </script>  
+            </div><!-- /.box -->
+      
+    </section><!-- /.content -->
+{% endblock %}
